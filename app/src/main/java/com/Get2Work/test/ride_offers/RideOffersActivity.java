@@ -14,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.google.common.collect.Lists;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.here.mobility.sdk.core.net.ResponseException;
 import com.here.mobility.sdk.core.net.ResponseFuture;
 import com.here.mobility.sdk.core.net.ResponseListener;
@@ -24,6 +26,7 @@ import com.here.mobility.sdk.demand.PublicTransportRideOffer;
 import com.here.mobility.sdk.demand.Ride;
 import com.here.mobility.sdk.demand.RideOffer;
 import com.here.mobility.sdk.demand.RideOffersRequest;
+import com.here.mobility.sdk.demand.RideStatusLog;
 import com.here.mobility.sdk.demand.TaxiRideOffer;
 import com.Get2Work.test.R;
 import com.Get2Work.test.public_transport.PublicTransportActivity;
@@ -61,12 +64,12 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
      */
     private DemandClient demandClient;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_offers);
         demandClient = DemandClient.newInstance(this);
+
         updateUI();
     }
 
@@ -90,6 +93,7 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
         //Received ride offers list from Intent.extra and update the list.
         ArrayList<RideOffer> rideOffers = getRideOffers();
         adapter.updateDataSource(rideOffers);
+
     }
 
 
