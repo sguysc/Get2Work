@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.here.mobility.sdk.sampleapp"
+        applicationId "com.Get2Work.test"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
@@ -16,7 +16,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions{
+    compileOptions {
         //This project uses java 8.
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -40,4 +40,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:multidex:1.0.3'
 
+    implementation 'com.google.firebase:firebase-database:11.8.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

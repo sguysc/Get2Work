@@ -132,7 +132,7 @@
                         android:layout_weight="1"
                         android:text="@string/passengers" />
 
-                    <com.here.mobility.sdk.sampleapp.widget.CounterView
+                    <com.Get2Work.test.widget.CounterView
                         android:id="@+id/ride_details_passenger_counter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                         android:layout_weight="1"
                         android:text="@string/suitcases" />
 
-                    <com.here.mobility.sdk.sampleapp.widget.CounterView
+                    <com.Get2Work.test.widget.CounterView
                         android:id="@+id/ride_details_suitcase_counter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

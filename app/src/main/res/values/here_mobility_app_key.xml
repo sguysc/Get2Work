@@ -11,7 +11,7 @@
     Once you have your keys replace strings values in this file.
     -->
 
-    <string name="here_sdk_app_id">{YOUR_SDK_APP_ID}</string>
-    <string name="here_sdk_app_secret">{YOUR_SDK_APP_SECRET}</string>
+    <string name="here_sdk_app_id">"pUv5MYLlLu5MF6YYgAMdsGwdHq8GZrji"</string>
+    <string name="here_sdk_app_secret">"pVsNGdIcDyFYI83hRQJY2W-OW4yTfjF2wzAUfuwmeuQXr7Ugf2MH-J4imqtyeGwt"</string>
 
 </resources>

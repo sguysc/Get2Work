@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">sampleApp</string>
+    <string name="app_name">Get2Work</string>
 
     <string name="from_where">From where?</string>
     <string name="where_to">Where to?</string>
