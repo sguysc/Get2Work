@@ -512,13 +512,14 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
     };
 
 
+    public String userName;
     /**
      * Show registration dialog.
      */
     private void showRegistrationDialog() {
         RegistrationDialog dialog = new RegistrationDialog(GetRidesActivity.this);
         dialog.setPositiveButton(R.string.register, (d, which) -> {
-            String userName = dialog.getUserName();
+            userName = dialog.getUserName();
             if (!userName.isEmpty()){
 
                 // The user registration should be done with your app's backend (see the documentation for more info).

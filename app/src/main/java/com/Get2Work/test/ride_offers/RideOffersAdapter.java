@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.here.mobility.sdk.core.HereMobilitySdk;
 import com.here.mobility.sdk.demand.PriceEstimate;
 import com.here.mobility.sdk.demand.PublicTransportRideOffer;
 import com.here.mobility.sdk.demand.RideOffer;
@@ -104,7 +105,9 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
         holder.supplierName.setText(offer.getSupplier().getEnglishName());
         PriceEstimate price = offer.getEstimatedPrice();
 
-        myRef = database.getReference(offer.getSupplier().getEnglishName());
+        myRef = database.getReference(HereMobilitySdk.getUserId());
+        myRef = myRef.child(offer.getSupplier().getEnglishName());
+        //myRef = database.getReference(offer.getSupplier().getEnglishName());
         Map<String, Object> childUpdates = new HashMap<>();
 
         //Price can be fixed or range of prices.
@@ -151,7 +154,10 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
 
         holder.actionButton.setText(R.string.public_transport_details);
         holder.supplierName.setText(R.string.public_transport);
-        myRef = database.getReference(String.format(Locale.getDefault(),"%s(%d)",holder.supplierName.getText(), offer.getTransfers())  );
+
+        myRef = database.getReference(HereMobilitySdk.getUserId());
+        myRef = myRef.child(String.format(Locale.getDefault(),"%s(%d)",holder.supplierName.getText(), offer.getTransfers())  );
+
         Map<String, Object> childUpdates = new HashMap<>();
 
         PriceEstimate price = offer.getEstimatedPrice();
