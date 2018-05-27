@@ -16,6 +16,7 @@ class emp(object):
         self.name = name
         self.title = title
         self.slaryIndx = slaryIndx
+        self.profit=profit
         
         
     '''def setTitle(self,title):
@@ -38,7 +39,7 @@ class transport(object):
     def __init__(self,name,price,duration):
         self.name=name
         self.price=price
-        self.duratioin=duration
+        self.duration=duration
         
         
 class jobAndAccess(object):
@@ -56,14 +57,24 @@ class jobAndAccess(object):
         TODO: change input location to real location object
         TODO: query database via firebase for real time and prices for commutes
         '''
+        self.trns=[]
         D=np.abs(self.jobLocation-empLocation)
-        self.trns.append(transport('taxi1',D*5,D/40)) #5 sekel per km, 40Km/hour
-        self.trns.append(transport('bus1',5,D/15)) #5 sekel total, 15Km/hour
+        self.trns.append(transport('taxi1',7+D*5,0.05+D/50)) #7 shkl + 5 shekel per km, 40Km/hour, 3min wait
+        self.trns.append(transport('bus1',5,0.16+D/15)) #5 sekel total, 15Km/hour, 10 min wait
         self.trns.append(transport('bike',0,D/10))
-        self.trns.append(transport('walk',0,D/4))
+        #self.trns.append(transport('walk',0,D/4))
         
 
 def calcOffers(agenda,employee,jobAndAcc,empLoc):
+    # update jobAndAccess attribs for employee location:
+    jobAndAcc.getCommuteOptions(empLoc)
+    print('employee name:' + employee.name + ', title: ' + employee.title + ', slry: ' + str(employee.slaryIndx))
+    print('Job distance: abs(' + str(jobAndAcc.jobLocation) + '-' + str(empLoc) + ')=' + str(np.abs(empLoc-jobAndAcc.jobLocation)) + 'Km')
+    print('job transportation options:')
+    for tr in jobAndAcc.trns:
+        print('\ttransport: ' + tr.name + ', price: ' + str(tr.price) + ', duration: ' + str(tr.duration))
+        print('\ttotal cost: ' + str(tr.price+tr.duration*employee.slaryIndx))
+        
     
 
 
@@ -72,22 +83,26 @@ def calcOffers(agenda,employee,jobAndAcc,empLoc):
 import get2work as g2w
 
 # create employees:
-sam=g2w.emp(12,'sam','sales',40)
+sam=g2w.emp(12,'sam','sales',35)
 rob=g2w.emp(12,'rob','sales',45)
 
 #create a job:
-j1=g2w.jobAndAccess(15) # job location==15km
+j1=g2w.jobAndAccess(6) # job location==6km
+j2=g2w.jobAndAccess(2.5) # job location==2.5km
+
 
 # set company agenda:
 A1=g2w.cmpnyGreenAgenda('greedy',0.2)
 A2=g2w.cmpnyGreenAgenda('greeny',0.7)
 
 # set employee location:
-empLoc=-3 #employee location == -3Km
-# update jobAndAccess attribs for employee location:
-j1.getCommuteOptions(empLoc)
+empLoc=1 #employee location == -3Km
 
 # calculate offers:
-calcOffers(A1,sam,j1,empLoc)
+g2w.calcOffers(A1,sam,j1,empLoc)
+g2w.calcOffers(A1,rob,j1,empLoc)
+g2w.calcOffers(A1,sam,j2,empLoc)
+g2w.calcOffers(A1,rob,j2,empLoc)
+
     
 '''
