@@ -16,7 +16,7 @@ class emp(object):
         self.name = name
         self.title = title
         self.slaryIndx = slaryIndx
-        self.profit=profit
+        #self.profit=profit
         
         
     '''def setTitle(self,title):
