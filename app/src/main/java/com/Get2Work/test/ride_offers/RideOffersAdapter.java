@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.here.mobility.sdk.demand.PriceEstimate;
 import com.here.mobility.sdk.demand.PublicTransportRideOffer;
 import com.here.mobility.sdk.demand.RideOffer;
@@ -17,15 +19,18 @@ import com.here.mobility.sdk.demand.TaxiRideOffer;
 import com.Get2Work.test.R;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**********************************************************
  * Copyright © 2018 HERE Global B.V. All rights reserved. *
  **********************************************************/
 public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.RideOfferItem> {
-
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     /**
      * Ride offer list item listener.
@@ -63,6 +68,8 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
     @NonNull
     @Override
     public RideOfferItem onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        database = FirebaseDatabase.getInstance();
+
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.ride_offer_list_item, parent, false);
         return new RideOffersAdapter.RideOfferItem(itemView);
@@ -97,6 +104,9 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
         holder.supplierName.setText(offer.getSupplier().getEnglishName());
         PriceEstimate price = offer.getEstimatedPrice();
 
+        myRef = database.getReference(offer.getSupplier().getEnglishName());
+        Map<String, Object> childUpdates = new HashMap<>();
+
         //Price can be fixed or range of prices.
         if (price != null) {
             //The best practice to show price is by calling toPlainString()
@@ -105,14 +115,20 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
                         String.format(Locale.getDefault(),"%s %s"
                                 ,price.getFixedPrice().getAmount().toPlainString()
                                 ,price.getFixedPrice().getCurrencyCode()));
+                //childUpdates.put("price", price.getFixedPrice().getAmount().toPlainString());
+                //myRef.updateChildren( childUpdates );
             }else if (price.isRange()){
                 holder.estimatedPrice.setText(
                         String.format(Locale.getDefault(),"%s - %s %s"
                                 ,price.getPriceRange().getLowerBound().toPlainString()
                                 ,price.getPriceRange().getUpperBound().toPlainString()
                                 ,price.getPriceRange().getCurrencyCode()));
+
+                //myRef.updateChildren( childUpdates);
             }
         }
+        childUpdates.put("price", holder.estimatedPrice.getText() );
+        myRef.updateChildren( childUpdates);
 
         Long etaTimestamp = offer.getEstimatedPickupTime();
         if (etaTimestamp != null) {
@@ -121,6 +137,9 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
         }else{
             holder.eta.setText(R.string.not_available_initial);
         }
+
+        childUpdates.put("time", holder.eta.getText() );
+        myRef.updateChildren( childUpdates);
     }
 
 
@@ -132,6 +151,8 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
 
         holder.actionButton.setText(R.string.public_transport_details);
         holder.supplierName.setText(R.string.public_transport);
+        myRef = database.getReference(String.format(Locale.getDefault(),"%s(%d)",holder.supplierName.getText(), offer.getTransfers())  );
+        Map<String, Object> childUpdates = new HashMap<>();
 
         PriceEstimate price = offer.getEstimatedPrice();
 
@@ -151,6 +172,8 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
                                 ,price.getPriceRange().getCurrencyCode()));
             }
         }
+        childUpdates.put("price", holder.estimatedPrice.getText() );
+        myRef.updateChildren( childUpdates);
 
         Long etaTimestamp = offer.getEstimatedPickupTime();
         if (etaTimestamp != null) {
@@ -159,6 +182,9 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
         }else{
             holder.eta.setText(R.string.not_available_initial);
         }
+
+        childUpdates.put("time", holder.eta.getText() );
+        myRef.updateChildren( childUpdates);
 
     }
 

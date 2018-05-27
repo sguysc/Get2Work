@@ -67,7 +67,6 @@ import java.util.Locale;
  **********************************************************/
 public class GetRidesActivity extends AppCompatActivity implements MapView.MapReadyListener , RideDetailsFragment.RideDetailsFragmentCallback {
 
-
     /**
      * Activity log tag.
      */
@@ -182,7 +181,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
 
         //Initialize DemandClient.
         demandClient = DemandClient.newInstance(this);
-
+        
         //MapFragment initialization.
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
         if (mapFragment != null) {
@@ -490,7 +489,11 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
 
         @Override
         public void onResponse(@NonNull RideQueryResponse rideQueryResponse) {
-            setActiveRides(rideQueryResponse.getRides());
+            List<Ride> ridesRcvd = rideQueryResponse.getRides();
+            //ridesRcvd.
+            setActiveRides(ridesRcvd);
+            // GUY
+            // setActiveRides(rideQueryResponse.getRides());
         }
 
         @Override
@@ -540,7 +543,6 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
 
         //show rides with type ongoing or future.
         activeRides = Lists.newArrayList();
-
         for (Ride ride : rides) {
             boolean isActive = ride.getStatusLog().getCurrentStatus() != RideStatusLog.Status.REJECTED &&
                     ride.getStatusLog().getCurrentStatus().ordinal() < RideStatusLog.Status.COMPLETED.ordinal();
