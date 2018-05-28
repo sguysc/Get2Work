@@ -59,7 +59,6 @@ public class AuthUtils {
         }
     }
 
-
     /**
      * Register user to sdk.
      * @param userID the user name.
@@ -76,7 +75,7 @@ public class AuthUtils {
                 userID, //newUserId the user ID
                 (int)timeExpirationInSeconds, //newExpirationSec The expiration of the hash, in seconds since epoch
                 appSecret);
-
+        
         //create user info.
         HereSdkUserAuthInfo userInfo = HereSdkUserAuthInfo.create(
                 userID,

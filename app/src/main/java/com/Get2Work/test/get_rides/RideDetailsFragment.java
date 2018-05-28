@@ -19,6 +19,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.here.mobility.sdk.core.HereMobilitySdk;
 import com.here.mobility.sdk.demand.BookingConstraints;
 import com.here.mobility.sdk.demand.PassengerDetails;
 import com.Get2Work.test.R;
@@ -127,7 +128,9 @@ public class RideDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ride_details, container, false);
 
         name = view.findViewById(R.id.nameEditText);
+        name.setText(HereMobilitySdk.getUserId());
         phone = view.findViewById(R.id.phoneEditText);
+        phone.setText("972542231645");
         note = view.findViewById(R.id.notesEditText);
         passenger = view.findViewById(R.id.ride_details_passenger_counter);
         suitcases = view.findViewById(R.id.ride_details_suitcase_counter);

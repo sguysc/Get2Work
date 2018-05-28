@@ -2,8 +2,8 @@ package com.Get2Work.test;
 
 import android.support.multidex.MultiDexApplication;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
 import com.here.mobility.sdk.core.HereMobilitySdk;
 
 
@@ -27,9 +27,9 @@ public class SampleApplication extends MultiDexApplication {
 
         //put here the rest of you app sdks initialization.
         // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //DatabaseReference myRef = database.getReference("message");
 
-        myRef.setValue("Damn, San Fransisco!");
+        //myRef.setValue("Damn, San Fransisco!");
     }
 }
