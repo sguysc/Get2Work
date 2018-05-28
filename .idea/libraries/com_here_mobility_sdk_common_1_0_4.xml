@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="com.here.mobility.sdk:common-1.0.4">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/common-1.0.4.aar/81597599ccc93c30cc37b26d218aa1e6/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/common-1.0.4.aar/81597599ccc93c30cc37b26d218aa1e6/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -42,5 +42,6 @@
     <string name="register_not_valid_user_name">User name is mandatory for registration</string>
     <string name="enter_user_name">Enter user name</string>
 
-
+    <string name="next_ride_from_adress">10 Downing Street, Westminster, London, SW1A 2</string>
+    <string name="next_ride_to_adress">128 Lordship Ln, East Dulwich, London, SE22 8HD</string>
 </resources>

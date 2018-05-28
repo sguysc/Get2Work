@@ -361,7 +361,15 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
         }
     }
 
+    public void onNextRideButtonClicked(@NonNull View view) {
 
+        ((TextView)findViewById(R.id.pickupAddressView))
+                .setText(R.string.next_ride_from_adress);
+        ((TextView)findViewById(R.id.destAddressView))
+                .setText(R.string.next_ride_to_adress);
+
+        this.onShowRidesButtonClicked(view);
+    }
     /**
      *
      * @param passengerDetails passenger details
