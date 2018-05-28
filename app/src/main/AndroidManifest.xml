@@ -2,21 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.Get2Work.test">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".SampleApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".SampleApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".get_rides.GetRidesActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppThemeNoTitle">
+        <!--android:name=".nextCustomer"-->
+        <activity
+            android:name=".get_rides.GetRidesActivity"
+
+            android:theme="@style/AppThemeNoTitle"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,10 +34,10 @@
         <meta-data
             android:name="com.here.mobility.sdk.API_KEY"
             android:value="@string/here_sdk_app_id" />
-
         <meta-data
             android:name="HERE_SDK_APP_SECRET"
             android:value="@string/here_sdk_app_secret" />
+
     </application>
 
 </manifest>

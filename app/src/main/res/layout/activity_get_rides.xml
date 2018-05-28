@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".get_rides.GetRidesActivity">
 
-        <fragment
-            android:id="@+id/map_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/show_rides_button"
-            android:name="com.here.mobility.sdk.map.MapFragment"
-            />
-        <include
-            layout="@layout/view_search_panel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="4dp"
-            android:layout_margin="16dp"
-            android:layout_marginTop="16dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:targetApi="lollipop"/>
+    <fragment
+        android:id="@+id/map_fragment"
+        android:name="com.here.mobility.sdk.map.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignLeft="@+id/ride_details_container"
+        android:layout_alignStart="@+id/ride_details_container"
+        android:layout_below="@+id/show_future_rides_button"
+        android:layout_marginLeft="151dp"
+        android:layout_marginStart="151dp" />
+
+    <include
+        android:id="@+id/include2"
+        layout="@layout/view_search_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/show_future_rides_button"
+        android:layout_centerHorizontal="true"
+        android:elevation="4dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:targetApi="lollipop" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/show_future_rides_button"
@@ -48,6 +54,21 @@
         android:id="@+id/ride_details_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/show_future_rides_button"
         android:elevation="5dp"
-        tools:ignore="UnusedAttribute" />
+        tools:ignore="UnusedAttribute">
+
+    </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/next_ride_imagebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:onClick="onNextRideButtonClicked"
+        app:srcCompat="@drawable/next_ride_robinson" />
 </RelativeLayout>

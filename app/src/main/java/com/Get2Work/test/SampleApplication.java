@@ -30,6 +30,6 @@ public class SampleApplication extends MultiDexApplication {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
-        myRef.setValue("Hello, World!");
+        myRef.setValue("Damn, San Fransisco!");
     }
 }

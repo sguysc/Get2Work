@@ -10,16 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:paddingBottom="14dp"
-        android:paddingTop="14dp"
         android:paddingLeft="@dimen/layout_horizontal_standard_value"
+        android:paddingRight="@dimen/layout_horizontal_standard_value"
         android:paddingStart="@dimen/layout_horizontal_standard_value"
-        android:paddingRight="@dimen/layout_horizontal_standard_value">
+        android:paddingTop="14dp">
 
         <EditText
             android:id="@+id/pickupAddressView"
             style="@style/AddressInputStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:drawableLeft="@drawable/from"
             android:drawablePadding="@dimen/layout_horizontal_standard_value"
@@ -28,8 +30,6 @@
             android:hint="@string/from_where"
             android:tag="pickup"
             android:transitionName="address"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             tools:targetApi="lollipop" />
 
         <ImageView
@@ -38,11 +38,11 @@
             android:layout_height="2dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_below="@+id/pickupAddressView"
             android:layout_marginLeft="@dimen/layout_horizontal_standard_value"
             android:layout_marginStart="32dp"
             android:layout_marginTop="@dimen/layout_horizontal_standard_value"
-            android:layout_below="@+id/pickupAddressView"
-            android:background="@color/off_white"/>
+            android:background="@color/off_white" />
 
         <EditText
             android:id="@+id/destAddressView"
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:src="@drawable/from_to_2"/>
+            android:src="@drawable/from_to_2" />
 
     </RelativeLayout>
 
