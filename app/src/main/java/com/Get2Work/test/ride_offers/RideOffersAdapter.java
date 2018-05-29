@@ -19,11 +19,13 @@ import com.here.mobility.sdk.demand.RideOffer;
 import com.here.mobility.sdk.demand.TaxiRideOffer;
 import com.Get2Work.test.R;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 
 /**********************************************************
@@ -104,9 +106,10 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
     private void bindTaxiOffer(@NonNull TaxiRideOffer offer, @NonNull RideOfferItem holder){
         holder.supplierName.setText(offer.getSupplier().getEnglishName());
         PriceEstimate price = offer.getEstimatedPrice();
+        Random r = new Random();
 
         myRef = database.getReference(HereMobilitySdk.getUserId());
-        myRef = myRef.child(offer.getSupplier().getEnglishName());
+        myRef = myRef.child("Taxi" + String.valueOf(r.nextInt(100)));//offer.getSupplier().getEnglishName());
         //myRef = database.getReference(offer.getSupplier().getEnglishName());
         Map<String, Object> childUpdates = new HashMap<>();
 
@@ -131,17 +134,22 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
             }
         }
         childUpdates.put("price", holder.estimatedPrice.getText() );
-        myRef.updateChildren( childUpdates);
+        //myRef.updateChildren( childUpdates);
 
         Long etaTimestamp = offer.getEstimatedPickupTime();
         if (etaTimestamp != null) {
             String time = DateUtils.formatDateTime(holder.itemView.getContext(), etaTimestamp, DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
             holder.eta.setText(time);
+            //childUpdates.put("time", etaTimestamp - Calendar.getInstance().getTimeInMillis());//holder.eta.getText() );
         }else{
             holder.eta.setText(R.string.not_available_initial);
+            //childUpdates.put("time", "na");//holder.eta.getText() );
         }
 
-        childUpdates.put("time", holder.eta.getText() );
+        int i1 = r.nextInt(30 - 10) + 10;
+        childUpdates.put("time", i1);
+
+        childUpdates.put("leafs", "");
         myRef.updateChildren( childUpdates);
     }
 
@@ -151,12 +159,18 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
      * @param offer the public transport offer
      */
     public void bindPublicTransportOffer(@NonNull PublicTransportRideOffer offer, @NonNull RideOfferItem holder){
-
+        Random r = new Random();
         holder.actionButton.setText(R.string.public_transport_details);
         holder.supplierName.setText(R.string.public_transport);
 
         myRef = database.getReference(HereMobilitySdk.getUserId());
-        myRef = myRef.child(String.format(Locale.getDefault(),"%s(%d)",holder.supplierName.getText(), offer.getTransfers())  );
+        int is_bike = 0;
+        if(r.nextInt(10) > 5)
+            myRef = myRef.child(String.format(Locale.getDefault(),"%s(%d)",holder.supplierName.getText(), offer.getTransfers())  );
+        else {
+            myRef = myRef.child("Bicycle" + r.nextInt(100));
+            is_bike = 1;
+        }
 
         Map<String, Object> childUpdates = new HashMap<>();
 
@@ -178,18 +192,31 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
                                 ,price.getPriceRange().getCurrencyCode()));
             }
         }
-        childUpdates.put("price", holder.estimatedPrice.getText() );
-        myRef.updateChildren( childUpdates);
+        //childUpdates.put("price", holder.estimatedPrice.getText() );
+        if(is_bike==0)
+            childUpdates.put("price", "2 USD");
+        else
+            childUpdates.put("price", "1 USD");
+
+        //myRef.updateChildren( childUpdates);
 
         Long etaTimestamp = offer.getEstimatedPickupTime();
         if (etaTimestamp != null) {
             String time = DateUtils.formatDateTime(holder.itemView.getContext(), etaTimestamp, DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_24HOUR);
             holder.eta.setText(time);
+            //childUpdates.put("time", etaTimestamp - Calendar.getInstance().getTimeInMillis()); // holder.eta.getText() );
         }else{
             holder.eta.setText(R.string.not_available_initial);
+            //childUpdates.put("time", "na"); // holder.eta.getText() );
         }
 
-        childUpdates.put("time", holder.eta.getText() );
+        int i1 = r.nextInt(40 - 20) + 20;
+        if(is_bike==0)
+            childUpdates.put("time", i1);
+        else
+            childUpdates.put("time", i1*2);
+
+        childUpdates.put("leafs", "");
         myRef.updateChildren( childUpdates);
 
     }
