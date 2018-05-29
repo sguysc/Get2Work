@@ -441,7 +441,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
         ((TextView)findViewById(R.id.destAddressView))
                 .setText(R.string.next_ride_to_adress);
 
-        //this.onShowRidesButtonClicked(view);
+        this.onShowRidesButtonClicked(view);
     }
     /**
      *
