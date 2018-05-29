@@ -3,6 +3,7 @@ package com.Get2Work.test.geocoding;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,12 +16,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 import com.here.mobility.sdk.common.util.Cancelable;
 import com.here.mobility.sdk.common.util.PermissionUtils;
 import com.here.mobility.sdk.core.geo.LatLng;
@@ -36,8 +41,10 @@ import com.Get2Work.test.util.Constant;
 
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -94,6 +101,9 @@ public class AutoCompleteActivity extends AppCompatActivity {
     @Nullable
     private Location lastKnownLocation;
 
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private static int i = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,7 +112,7 @@ public class AutoCompleteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_geocoding);
         autocompleteClient = new GeocodingClient(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
+        database = FirebaseDatabase.getInstance();
         updateUI();
         updateLastKnownLocation();
     }
@@ -176,6 +186,28 @@ public class AutoCompleteActivity extends AppCompatActivity {
         Intent resultIntent = new Intent();
         resultIntent.putExtra(GEOCODING_RESULT, selected);
         setResult(RESULT_OK, resultIntent);
+        //Toast.makeText(AutoCompleteActivity.this, selected.getId() + ": " + selected.getLocation(), Toast.LENGTH_LONG).show();
+        //Log.i("selected.getId()", selected.getId());
+        //Log.i("selected.getAddressId()", selected.getAddressId());
+        //Log.i("selected.getType()", selected.getType().toString());
+        //Log.i("selected.getAddressText", selected.getAddressText());
+        //Log.i("selected.getLocation()", selected.getLocation().toString());
+        //Log.i("selected.getTitle()", selected.getTitle());
+
+        //Map<String, Object> childUpdates = new HashMap<>();
+        //childUpdates.put("loc", selected. );
+        //myRef.updateChildren( childUpdates);
+        //myRef.setValue(selected);
+        //myRef = database.getReference("loc" + this.i); this.i=this.i+1;
+        //Gson gson = new Gson();
+        //String selected_json = gson.toJson(selected);
+        //String id =  "" +  user.getId(); // get storage key
+        //SharedPreferences.Editor editor;
+        //editor.putString("loc" + this.i, selected_json); this.i=this.i+1;
+        //editor.commit();
+        //myRef.setValue(selected_json);
+        //GeocodingResult sel = gson.fromJson(selected_json, GeocodingResult.class);
+
         finish();
     };
 
@@ -212,7 +244,7 @@ public class AutoCompleteActivity extends AppCompatActivity {
      * Forward geocoding by given a textual query.
      * @param query the query for forward geocoding.
      */
-    private void geocodingRequest(@NonNull String query) {
+    public void geocodingRequest(@NonNull String query) {
 
         //User current location.
         LatLng location;

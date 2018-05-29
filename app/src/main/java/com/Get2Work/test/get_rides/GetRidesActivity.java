@@ -21,8 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.collect.Lists;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.here.mobility.sdk.common.util.PermissionUtils;
 import com.here.mobility.sdk.core.auth.UserAuthenticationException;
+import com.here.mobility.sdk.core.geo.Address;
 import com.here.mobility.sdk.core.geo.LatLng;
 import com.here.mobility.sdk.core.net.ResponseException;
 import com.here.mobility.sdk.core.net.ResponseFuture;
@@ -173,12 +180,16 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
     @Nullable
     private List<Ride> activeRides;
 
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_rides);
 
+        database = FirebaseDatabase.getInstance();
         //Initialize DemandClient.
         demandClient = DemandClient.newInstance(this);
         
@@ -363,12 +374,74 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
 
     public void onNextRideButtonClicked(@NonNull View view) {
 
+        // [START single_value_read]
+/*        database.getReference().addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user value
+                        Gson gson = new Gson();
+                        Log.i("GUY", dataSnapshot.child("loc0").getValue(String.class));
+                        Log.i("GUY", dataSnapshot.child("loc1").getValue(String.class));
+                        //this.pickup = gson.fromJson(dataSnapshot.getValue().toString(), GeocodingResult.class);
+                        //GeocodingResult pickup1      = gson.fromJson(dataSnapshot.child("loc0").getValue(String.class), GeocodingResult.class);
+                        //GeocodingResult destination1 = gson.fromJson(dataSnapshot.child("loc1").getValue(String.class), GeocodingResult.class);
+
+                        //finish();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                        // [START_EXCLUDE]
+                        //setEditingEnabled(true);
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END single_value_read]
+        // [START single_value_read]
+/*        database.getReference("loc1").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user value
+                        Gson gson = new Gson();
+                        Log.i("GUY", dataSnapshot.getValue(String.class));
+                        //this.pickup = gson.fromJson(dataSnapshot.getValue().toString(), GeocodingResult.class);
+                        destination = gson.fromJson(dataSnapshot.getValue(String.class), GeocodingResult.class);
+                        //finish();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                        // [START_EXCLUDE]
+                        //setEditingEnabled(true);
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END single_value_read]*/
+        //database.getReference("loc0").getRef().
+        //this.pickup = gson.fromJson(myRef.getKey(), GeocodingResult.class);
+        //GeocodingResult pickup;
+        //this.pickup = GeocodingResult.create("loc-dmVyc2lvbj0xO3RpdGxlPTEwK0Rvd25pbmcrU3RyZWV0O2xhbmc9ZW47bGF0PTUxLjUwMzQxMDMzOTM1NTQ3O2xvbj0tMC4xMjc2NDk5OTI3MDQzOTE0ODtzdHJlZXQ9RG93bmluZytTdHJlZXQ7aG91c2U9MTA7Y2l0eT1Mb25kb247cG9zdGFsQ29kZT1TVzFBKzI7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9V2VzdG1pbnN0ZXI7c3RhdGU9RW5nbGFuZDtjb3VudHk9TG9uZG9uO2NhdGVnb3J5SWQ9YnVpbGRpbmc7c291cmNlU3lzdGVtPWludGVybmFsO25sYXQ9NTEuNTAzMTUwOTM5OTQxNDA2O25sb249LTAuMTI2NzgwMDAzMzA5MjQ5ODg", GeocodingResult.ADDRESS,
+        //        "10 Downing Street", "Westminster, London, SW1A 2", @Nullable Address address,
+        //        "https://places.api.here.com/places/v1/places/loc-dmVyc2lvbj0xO3RpdGxlPTEwK0Rvd25pbmcrU3RyZWV0O2xhbmc9ZW47bGF0PTUxLjUwMzQxMDMzOTM1NTQ3O2xvbj0tMC4xMjc2NDk5OTI3MDQzOTE0ODtzdHJlZXQ9RG93bmluZytTdHJlZXQ7aG91c2U9MTA7Y2l0eT1Mb25kb247cG9zdGFsQ29kZT1TVzFBKzI7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9V2VzdG1pbnN0ZXI7c3RhdGU9RW5nbGFuZDtjb3VudHk9TG9uZG9uO2NhdGVnb3J5SWQ9YnVpbGRpbmc7c291cmNlU3lzdGVtPWludGVybmFsO25sYXQ9NTEuNTAzMTUwOTM5OTQxNDA2O25sb249LTAuMTI2NzgwMDAzMzA5MjQ5ODg;context=Zmxvdy1pZD05MDZkOGJkZS1kZjI0LTU3OWItYWMxOC04YTI3ZGI1N2FkZGRfMTUyNzU0MTc1Nzk5NF8yNDI0XzI0NCZyYW5rPTA", LatLng.fromDegrees(51.50341, -0.12765))
+        //this.pickup = pickup;
+        //this.destination = GeocodingResult.create("loc-dmVyc2lvbj0xO3RpdGxlPTEyOCtMb3Jkc2hpcCtMYW5lO2xhbmc9ZW47bGF0PTUxLjQ1NjAzMTc5OTMxNjQwNjtsb249LTAuMDc2MzAzMjI4NzM1OTIzNzc7c3RyZWV0PUxvcmRzaGlwK0xhbmU7aG91c2U9MTI4O2NpdHk9TG9uZG9uO3Bvc3RhbENvZGU9U0UyMis4SEQ7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9RWFzdCtEdWx3aWNoO3N0YXRlPUVuZ2xhbmQ7Y291bnR5PUxvbmRvbjtjYXRlZ29yeUlkPWJ1aWxkaW5nO3NvdXJjZVN5c3RlbT1pbnRlcm5hbDtubGF0PTUxLjQ1NTk3NDU3ODg1NzQyO25sb249LTAuMDc2MjIwMDgwMjU2NDYyMQ", GeocodingResult.ADDRESS,
+                //        "128 Lordship Lane", "East Dulwich, London, SE22 8HD", @Nullable Address address,
+                //        "https://places.api.here.com/places/v1/places/loc-dmVyc2lvbj0xO3RpdGxlPTEyOCtMb3Jkc2hpcCtMYW5lO2xhbmc9ZW47bGF0PTUxLjQ1NjAzMTc5OTMxNjQwNjtsb249LTAuMDc2MzAzMjI4NzM1OTIzNzc7c3RyZWV0PUxvcmRzaGlwK0xhbmU7aG91c2U9MTI4O2NpdHk9TG9uZG9uO3Bvc3RhbENvZGU9U0UyMis4SEQ7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9RWFzdCtEdWx3aWNoO3N0YXRlPUVuZ2xhbmQ7Y291bnR5PUxvbmRvbjtjYXRlZ29yeUlkPWJ1aWxkaW5nO3NvdXJjZVN5c3RlbT1pbnRlcm5hbDtubGF0PTUxLjQ1NTk3NDU3ODg1NzQyO25sb249LTAuMDc2MjIwMDgwMjU2NDYyMQ;context=Zmxvdy1pZD0xMzA2M2E4Zi01OGY1LTViZTgtOWZhMS1lNWFkNzg2NzMzMDVfMTUyNzU0MjEyNTc5MV81MDc4XzYwJnJhbms9MA", LatLng.fromDegrees(51.456032, -0.076303))
+        //Address.create()
+        //AutoCompleteActivity.
+        //Gson gson = new Gson();
+        //this.pickup = gson.fromJson("{\"addressId\":\"https://places.api.here.com/places/v1/places/loc-dmVyc2lvbj0xO3RpdGxlPTEwK0Rvd25pbmcrU3RyZWV0O2xhbmc9ZW47bGF0PTUxLjUwMzQxMDMzOTM1NTQ3O2xvbj0tMC4xMjc2NDk5OTI3MDQzOTE0ODtzdHJlZXQ9RG93bmluZytTdHJlZXQ7aG91c2U9MTA7Y2l0eT1Mb25kb247cG9zdGFsQ29kZT1TVzFBKzI7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9V2VzdG1pbnN0ZXI7c3RhdGU9RW5nbGFuZDtjb3VudHk9TG9uZG9uO2NhdGVnb3J5SWQ9YnVpbGRpbmc7c291cmNlU3lzdGVtPWludGVybmFsO25sYXQ9NTEuNTAzMTUwOTM5OTQxNDA2O25sb249LTAuMTI2NzgwMDAzMzA5MjQ5ODg;context\\u003dZmxvdy1pZD0xYzU1OGE2MS02MzZjLTU5M2QtODIzZC1kMTMwNTMxNDdlY2NfMTUyNzYwODQzMDExOF84MDY1XzQ0NTAmcmFuaz0w\",\"addressText\":\"Westminster, London, SW1A 2\",\"id\":\"loc-dmVyc2lvbj0xO3RpdGxlPTEwK0Rvd25pbmcrU3RyZWV0O2xhbmc9ZW47bGF0PTUxLjUwMzQxMDMzOTM1NTQ3O2xvbj0tMC4xMjc2NDk5OTI3MDQzOTE0ODtzdHJlZXQ9RG93bmluZytTdHJlZXQ7aG91c2U9MTA7Y2l0eT1Mb25kb247cG9zdGFsQ29kZT1TVzFBKzI7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9V2VzdG1pbnN0ZXI7c3RhdGU9RW5nbGFuZDtjb3VudHk9TG9uZG9uO2NhdGVnb3J5SWQ9YnVpbGRpbmc7c291cmNlU3lzdGVtPWludGVybmFsO25sYXQ9NTEuNTAzMTUwOTM5OTQxNDA2O25sb249LTAuMTI2NzgwMDAzMzA5MjQ5ODg\",\"location\":{\"lat\":51.50341,\"lng\":-0.12765},\"title\":\"10 Downing Street\",\"type\":\"ADDRESS\"}", GeocodingResult.class);
+        //this.destination = gson.fromJson("\"{\\\"addressId\\\":\\\"https://places.api.here.com/places/v1/places/loc-dmVyc2lvbj0xO3RpdGxlPTEyOCtMb3Jkc2hpcCtMYW5lO2xhbmc9ZW47bGF0PTUxLjQ1NjAzMTc5OTMxNjQwNjtsb249LTAuMDc2MzAzMjI4NzM1OTIzNzc7c3RyZWV0PUxvcmRzaGlwK0xhbmU7aG91c2U9MTI4O2NpdHk9TG9uZG9uO3Bvc3RhbENvZGU9U0UyMis4SEQ7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9RWFzdCtEdWx3aWNoO3N0YXRlPUVuZ2xhbmQ7Y291bnR5PUxvbmRvbjtjYXRlZ29yeUlkPWJ1aWxkaW5nO3NvdXJjZVN5c3RlbT1pbnRlcm5hbDtubGF0PTUxLjQ1NTk3NDU3ODg1NzQyO25sb249LTAuMDc2MjIwMDgwMjU2NDYyMQ;context\\\\u003dZmxvdy1pZD00N2RmMmU0Ny00YjE2LTU4MmItOWY0Zi1lYjk3OTM4ODNkNDdfMTUyNzYwODQzNTk4Ml8yNTI0Xzg0NjQmcmFuaz0w\\\",\\\"addressText\\\":\\\"East Dulwich, London, SE22 8HD\\\",\\\"id\\\":\\\"loc-dmVyc2lvbj0xO3RpdGxlPTEyOCtMb3Jkc2hpcCtMYW5lO2xhbmc9ZW47bGF0PTUxLjQ1NjAzMTc5OTMxNjQwNjtsb249LTAuMDc2MzAzMjI4NzM1OTIzNzc7c3RyZWV0PUxvcmRzaGlwK0xhbmU7aG91c2U9MTI4O2NpdHk9TG9uZG9uO3Bvc3RhbENvZGU9U0UyMis4SEQ7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9RWFzdCtEdWx3aWNoO3N0YXRlPUVuZ2xhbmQ7Y291bnR5PUxvbmRvbjtjYXRlZ29yeUlkPWJ1aWxkaW5nO3NvdXJjZVN5c3RlbT1pbnRlcm5hbDtubGF0PTUxLjQ1NTk3NDU3ODg1NzQyO25sb249LTAuMDc2MjIwMDgwMjU2NDYyMQ\\\",\\\"location\\\":{\\\"lat\\\":51.456032,\\\"lng\\\":-0.076303},\\\"title\\\":\\\"128 Lordship Lane\\\",\\\"type\\\":\\\"ADDRESS\\\"}\"", GeocodingResult.class);
         ((TextView)findViewById(R.id.pickupAddressView))
                 .setText(R.string.next_ride_from_adress);
         ((TextView)findViewById(R.id.destAddressView))
                 .setText(R.string.next_ride_to_adress);
 
-        this.onShowRidesButtonClicked(view);
+        //this.onShowRidesButtonClicked(view);
     }
     /**
      *
