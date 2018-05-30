@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -21,11 +22,13 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.Get2Work.test.get_rides.ParcelableAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.here.mobility.sdk.common.util.Cancelable;
 import com.here.mobility.sdk.common.util.PermissionUtils;
 import com.here.mobility.sdk.core.geo.LatLng;
@@ -198,13 +201,16 @@ public class AutoCompleteActivity extends AppCompatActivity {
         //childUpdates.put("loc", selected. );
         //myRef.updateChildren( childUpdates);
         //myRef.setValue(selected);
-        //myRef = database.getReference("loc" + this.i); this.i=this.i+1;
+
         //Gson gson = new Gson();
+        //GsonBuilder gsonBilder = new GsonBuilder();
+        //gsonBilder.registerTypeAdapter(Parcelable.class, new ParcelableAdapter());
+        //Gson gson = gsonBilder.create();
+        //myRef = database.getReference("loc" + this.i);
         //String selected_json = gson.toJson(selected);
-        //String id =  "" +  user.getId(); // get storage key
-        //SharedPreferences.Editor editor;
-        //editor.putString("loc" + this.i, selected_json); this.i=this.i+1;
-        //editor.commit();
+        //myRef.setValue(selected_json);
+        //myRef = database.getReference("addr" + this.i); this.i=this.i+1;
+        //selected_json = gson.toJson(selected.getAddress());
         //myRef.setValue(selected_json);
         //GeocodingResult sel = gson.fromJson(selected_json, GeocodingResult.class);
 
