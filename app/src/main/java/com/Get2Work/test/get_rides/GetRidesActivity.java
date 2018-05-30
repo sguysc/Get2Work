@@ -441,7 +441,13 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
         ((TextView)findViewById(R.id.destAddressView))
                 .setText(R.string.next_ride_to_adress);
 
-        this.onShowRidesButtonClicked(view);
+        // Remove me
+        RideWaypoints rideWaypoints = RideWaypoints.create(LatLng.fromDegrees(51.503497, -0.127367), LatLng.fromDegrees(51.495530, -0.131193));
+        BookingConstraints constraints = BookingConstraints.create(1, 1);
+        requestRideOffers(rideWaypoints, constraints, "", null); //1L
+        // Remove me
+
+        //this.onShowRidesButtonClicked(view);
     }
     /**
      *
@@ -514,7 +520,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
      * @param rideOffers list of ride offers.
      */
     private void showRideOffersActivity(List<RideOffer> rideOffers){
-        if (passengerDetails != null) {
+        //if (passengerDetails != null) {
 
             if(rideOffers.size() > 0){
 
@@ -542,7 +548,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
             }else{
                 Toast.makeText(this, R.string.error_no_ride_options_results, Toast.LENGTH_LONG).show();
             }
-        }
+        //}
     }
 
 
