@@ -68,6 +68,7 @@ import com.Get2Work.test.util.Constant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 /**********************************************************
  * Copyright © 2018 HERE Global B.V. All rights reserved. *
@@ -183,6 +184,8 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
+    private LatLng fromLatLong;
+    private LatLng toLatLong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,6 +202,88 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
             mapFragment.loadMapAsync(this);
         }
         updateUI();
+
+        database.getReference().addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user value
+                        //Gson gson = new Gson();
+                        //Log.i("GUY", dataSnapshot.child("loc0").getValue(String.class));
+                        //Log.i("GUY", dataSnapshot.child("loc1").getValue(String.class));
+                        //this.pickup = gson.fromJson(dataSnapshot.getValue().toString(), GeocodingResult.class);
+                        Random r = new Random();
+                        int f = r.nextInt(20);
+                        int t = r.nextInt(20);
+                        if(t==f)
+                            t = r.nextInt(20);
+
+                        String pickup1      = dataSnapshot.child("loc" + f).getValue(String.class);
+                        String destination1 = dataSnapshot.child("loc" + t).getValue(String.class);
+                        Address address = null;
+                        GeocodingResult.Type type = GeocodingResult.Type.ADDRESS;
+                        String ss[] = pickup1.split("\"*\":");
+                        String uri = ss[1].substring(0, ss[1].length()- 13);
+                        //Log.i("Guy", uri);
+                        String addressText = ss[2].substring(0, ss[2].length() - 4);
+                        //Log.i("Guy", addressText);
+                        String id =  ss[3].substring(0, ss[3].length() - 10);
+                        //Log.i("Guy", id);
+                        LatLng location = LatLng.fromDegrees( Double.parseDouble(ss[5].substring(0, ss[5].length() - 5)),
+                                Double.parseDouble(ss[6].substring(0, ss[6].length() - 8)));
+                        //Log.i("Guy", ss[5].substring(0, ss[5].length() - 5) + " " + ss[6].substring(0, ss[6].length() - 8));
+                        String title = ss[7].substring(0, ss[7].length() - 6);
+                        //Log.i("Guy", title);
+                        GeocodingResult from = GeocodingResult.create(id, type, title, addressText, address, uri, location);
+
+                        ss = destination1.split("\"*\":");
+                        uri = ss[1].substring(0, ss[1].length()- 13);
+                        //Log.i("Guy1", uri);
+                        addressText = ss[2].substring(0, ss[2].length() - 4);
+                        //Log.i("Guy1", addressText);
+                        id = ss[3].substring(0, ss[3].length() - 10);
+                        //Log.i("Guy1", id);
+                        location = LatLng.fromDegrees( Double.parseDouble(ss[5].substring(0, ss[5].length() - 5)),
+                                Double.parseDouble(ss[6].substring(0, ss[6].length() - 8)));
+                        //Log.i("Guy1", ss[5].substring(0, ss[5].length() - 5) + " " + ss[6].substring(0, ss[6].length() - 8));
+                        title = ss[7].substring(0, ss[7].length() - 6);
+                        //Log.i("Guy1", title);
+                        GeocodingResult to = GeocodingResult.create(id, type, title, addressText, address, uri, location);
+                        /*String id = "loc-dmVyc2lvbj0xO3RpdGxlPTEwK0Rvd25pbmcrU3RyZWV0O2xhbmc9ZW47bGF0PTUxLjUwMzQxMDMzOTM1NTQ3O2xvbj0tMC4xMjc2NDk5OTI3MDQzOTE0ODtzdHJlZXQ9RG93bmluZytTdHJlZXQ7aG91c2U9MTA7Y2l0eT1Mb25kb247cG9zdGFsQ29kZT1TVzFBKzI7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9V2VzdG1pbnN0ZXI7c3RhdGU9RW5nbGFuZDtjb3VudHk9TG9uZG9uO2NhdGVnb3J5SWQ9YnVpbGRpbmc7c291cmNlU3lzdGVtPWludGVybmFsO25sYXQ9NTEuNTAzMTUwOTM5OTQxNDA2O25sb249LTAuMTI2NzgwMDAzMzA5MjQ5ODg";
+                        GeocodingResult.Type type = GeocodingResult.Type.ADDRESS;
+                        String title = "10 Downing Street";
+                        String addressText = "Westminster, London, SW1A 2";
+                        Address address = null;
+                        String uri = "https://places.api.here.com/places/v1/places/loc-dmVyc2lvbj0xO3RpdGxlPTEwK0Rvd25pbmcrU3RyZWV0O2xhbmc9ZW47bGF0PTUxLjUwMzQxMDMzOTM1NTQ3O2xvbj0tMC4xMjc2NDk5OTI3MDQzOTE0ODtzdHJlZXQ9RG93bmluZytTdHJlZXQ7aG91c2U9MTA7Y2l0eT1Mb25kb247cG9zdGFsQ29kZT1TVzFBKzI7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9V2VzdG1pbnN0ZXI7c3RhdGU9RW5nbGFuZDtjb3VudHk9TG9uZG9uO2NhdGVnb3J5SWQ9YnVpbGRpbmc7c291cmNlU3lzdGVtPWludGVybmFsO25sYXQ9NTEuNTAzMTUwOTM5OTQxNDA2O25sb249LTAuMTI2NzgwMDAzMzA5MjQ5ODg;context\\\\u003dZmxvdy1pZD1iMTM3ZDY1Yi02N2IyLTU3OGUtYTVlZi0xZjJmYTY3ODRkOTVfMTUyNzcwNDAyNDYyN181NDYyXzU4MTEmcmFuaz0w";
+                        LatLng location = LatLng.fromDegrees(51.50341, -0.12765);
+                        GeocodingResult from = GeocodingResult.create(id, type, title, addressText, address, uri, location);
+                        //finish();
+                        id = "loc-dmVyc2lvbj0xO3RpdGxlPTEyOCtMb3Jkc2hpcCtMYW5lO2xhbmc9ZW47bGF0PTUxLjQ1NjAzMTc5OTMxNjQwNjtsb249LTAuMDc2MzAzMjI4NzM1OTIzNzc7c3RyZWV0PUxvcmRzaGlwK0xhbmU7aG91c2U9MTI4O2NpdHk9TG9uZG9uO3Bvc3RhbENvZGU9U0UyMis4SEQ7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9RWFzdCtEdWx3aWNoO3N0YXRlPUVuZ2xhbmQ7Y291bnR5PUxvbmRvbjtjYXRlZ29yeUlkPWJ1aWxkaW5nO3NvdXJjZVN5c3RlbT1pbnRlcm5hbDtubGF0PTUxLjQ1NTk3NDU3ODg1NzQyO25sb249LTAuMDc2MjIwMDgwMjU2NDYyMQ";
+                        title = "128 Lordship Lane";
+                        addressText = "East Dulwich, London, SE22 8HD";
+                        uri = "https://places.api.here.com/places/v1/places/loc-dmVyc2lvbj0xO3RpdGxlPTEyOCtMb3Jkc2hpcCtMYW5lO2xhbmc9ZW47bGF0PTUxLjQ1NjAzMTc5OTMxNjQwNjtsb249LTAuMDc2MzAzMjI4NzM1OTIzNzc7c3RyZWV0PUxvcmRzaGlwK0xhbmU7aG91c2U9MTI4O2NpdHk9TG9uZG9uO3Bvc3RhbENvZGU9U0UyMis4SEQ7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9RWFzdCtEdWx3aWNoO3N0YXRlPUVuZ2xhbmQ7Y291bnR5PUxvbmRvbjtjYXRlZ29yeUlkPWJ1aWxkaW5nO3NvdXJjZVN5c3RlbT1pbnRlcm5hbDtubGF0PTUxLjQ1NTk3NDU3ODg1NzQyO25sb249LTAuMDc2MjIwMDgwMjU2NDYyMQ;context\\\\u003dZmxvdy1pZD04OTIxYTljMy1hOGI2LTU3MTItODQ0ZS0zNzM5ZjVkZjljMmNfMTUyNzcwNDA0MTA1NV8xNDg1XzQ2MTYmcmFuaz0w";
+                        location = LatLng.fromDegrees(51.456032, -0.076303);
+                        */
+
+                        //GeocodingResult to = GeocodingResult.create(id, type, title, addressText, address, uri, location);
+                        pickup = from;
+                        destination = to;
+
+                        fromLatLong = LatLng.fromDegrees( Double.parseDouble(ss[5].substring(0, ss[5].length() - 5)),
+                                Double.parseDouble(ss[6].substring(0, ss[6].length() - 8)));
+                        toLatLong = LatLng.fromDegrees( Double.parseDouble(ss[5].substring(0, ss[5].length() - 5)),
+                                Double.parseDouble(ss[6].substring(0, ss[6].length() - 8)));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                        // [START_EXCLUDE]
+                        //setEditingEnabled(true);
+                        // [END_EXCLUDE]
+                    }
+                });
+
     }
 
 
@@ -442,7 +527,8 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
                 .setText(R.string.next_ride_to_adress);
 
         // Remove me
-        RideWaypoints rideWaypoints = RideWaypoints.create(LatLng.fromDegrees(51.503497, -0.127367), LatLng.fromDegrees(51.495530, -0.131193));
+        //RideWaypoints rideWaypoints = RideWaypoints.create(LatLng.fromDegrees(51.503497, -0.127367), LatLng.fromDegrees(51.495530, -0.131193));
+        RideWaypoints rideWaypoints = RideWaypoints.create(fromLatLong, toLatLong);
         BookingConstraints constraints = BookingConstraints.create(1, 1);
         requestRideOffers(rideWaypoints, constraints, "", null); //1L
         // Remove me
