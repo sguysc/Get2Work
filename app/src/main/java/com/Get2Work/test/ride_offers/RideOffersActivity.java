@@ -11,8 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Get2Work.test.rides.RidesAdapter;
 import com.google.common.collect.Lists;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -63,6 +68,7 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
      * Use DemandClient to request ride.
      */
     private DemandClient demandClient;
+    
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -223,4 +229,21 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
         intent.putExtra(EXTRA_PASSENGER_DETAILS,passengerDetails);
         return intent;
     }
+
+    public void onAnyButtonClicked(@NonNull View view) {
+
+        Toast.makeText(this, "This is my Toast message!",
+                Toast.LENGTH_LONG).show();
+
+        ((ImageView)findViewById(R.id.imageView_1st)).setImageResource(R.drawable.bus);
+
+        String styledText = "<b>Bus</b><br>60 min, 30 Leaves";
+        ((TextView)findViewById(R.id.editText_1st))
+                .setText( Html.fromHtml( styledText ) );
+
+        //listener.rideItemSelected(dataSource.get(1));
+        findViewById(getResources().getIdentifier("book_button", "id", getPackageName()))
+                .callOnClick();
+    }
+
 }

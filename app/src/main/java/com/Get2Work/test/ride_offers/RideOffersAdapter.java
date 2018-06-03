@@ -67,10 +67,15 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
         this.listener = listener;
     }
 
+    private boolean is1stUpdate;
 
     @NonNull
     @Override
     public RideOfferItem onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        //Amihay
+        is1stUpdate = true;
+
         database = FirebaseDatabase.getInstance();
 
         View itemView = LayoutInflater.from(parent.getContext())
@@ -104,15 +109,25 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
      * @param offer the taxi offer
      */
     private void bindTaxiOffer(@NonNull TaxiRideOffer offer, @NonNull RideOfferItem holder){
-        holder.supplierName.setText(offer.getSupplier().getEnglishName());
-        PriceEstimate price = offer.getEstimatedPrice();
-        Random r = new Random();
+        if (is1stUpdate) {
+            holder.supplierName.setText(offer.getSupplier().getEnglishName());
+            PriceEstimate price = offer.getEstimatedPrice();
+            Random r = new Random();
 
-        myRef = database.getReference(HereMobilitySdk.getUserId());
-        myRef = myRef.child("Taxi" + String.valueOf(r.nextInt(100)));//offer.getSupplier().getEnglishName());
+            myRef = database.getReference("Here/" + HereMobilitySdk.getUserId());
+            //myRef = myRef.child("Taxi" + String.valueOf(r.nextInt(100)));//offer.getSupplier().getEnglishName());
+            //myRef = myRef.child("Taxi");
+            updateRidesCosts( myRef.child("Taxi") );
+            updateRidesCosts( myRef.child("Bus") );
+            updateRidesCosts( myRef.child("Bike") );
+            updateRidesCosts( myRef.child("Walk") );
+
+            is1stUpdate = false;
+        }
         //myRef = database.getReference(offer.getSupplier().getEnglishName());
-        Map<String, Object> childUpdates = new HashMap<>();
+        //Map<String, Object> childUpdates = new HashMap<>();
 
+        /* Useless HERE text
         //Price can be fixed or range of prices.
         if (price != null) {
             //The best practice to show price is by calling toPlainString()
@@ -132,8 +147,9 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
 
                 //myRef.updateChildren( childUpdates);
             }
-        }
-        childUpdates.put("price", holder.estimatedPrice.getText() );
+        }*/
+        // Write price from HERE
+        //childUpdates.put("price", holder.estimatedPrice.getText() );
         //myRef.updateChildren( childUpdates);
 
         Long etaTimestamp = offer.getEstimatedPickupTime();
@@ -145,12 +161,32 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
             holder.eta.setText(R.string.not_available_initial);
             //childUpdates.put("time", "na");//holder.eta.getText() );
         }
+        /*  Amihay: Moved to function
+        int i1 = r.nextInt(50 - 10) + 10;
+        childUpdates.put("price", i1 );
 
-        int i1 = r.nextInt(30 - 10) + 10;
+        i1 = r.nextInt(30 - 10) + 10;
         childUpdates.put("time", i1);
 
         childUpdates.put("leafs", "");
-        myRef.updateChildren( childUpdates);
+        myRef.updateChildren( childUpdates);*/
+    }
+
+    private void updateRidesCosts(DatabaseReference ref){
+
+        Random r = new Random();
+        Map<String, Object> childUpdates = new HashMap<>();
+
+        int i1 = r.nextInt(50 - 10) + 10;
+        childUpdates.put("price", i1 );
+
+        i1 = r.nextInt(30 - 10) + 10;
+        childUpdates.put("time", i1);
+
+        childUpdates.put("leafs", "");
+        childUpdates.put("used", "");
+
+        ref.updateChildren( childUpdates);
     }
 
 
@@ -163,7 +199,7 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
         holder.actionButton.setText(R.string.public_transport_details);
         holder.supplierName.setText(R.string.public_transport);
 
-        myRef = database.getReference(HereMobilitySdk.getUserId());
+        myRef = database.getReference("Here/" + HereMobilitySdk.getUserId());
         int is_bike = 0;
         if(r.nextInt(10) > 5)
             myRef = myRef.child(String.format(Locale.getDefault(),"%s(%d)",holder.supplierName.getText(), offer.getTransfers())  );
@@ -210,7 +246,11 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
             //childUpdates.put("time", "na"); // holder.eta.getText() );
         }
 
-        int i1 = r.nextInt(40 - 20) + 20;
+
+        int i1 = r.nextInt(50 - 10) + 10;
+        childUpdates.put("price", i1 );
+
+        i1 = r.nextInt(40 - 20) + 20;
         if(is_bike==0)
             childUpdates.put("time", i1);
         else

@@ -249,21 +249,11 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
                         title = ss[7].substring(0, ss[7].length() - 6);
                         //Log.i("Guy1", title);
                         GeocodingResult to = GeocodingResult.create(id, type, title, addressText, address, uri, location);
-                        /*String id = "loc-dmVyc2lvbj0xO3RpdGxlPTEwK0Rvd25pbmcrU3RyZWV0O2xhbmc9ZW47bGF0PTUxLjUwMzQxMDMzOTM1NTQ3O2xvbj0tMC4xMjc2NDk5OTI3MDQzOTE0ODtzdHJlZXQ9RG93bmluZytTdHJlZXQ7aG91c2U9MTA7Y2l0eT1Mb25kb247cG9zdGFsQ29kZT1TVzFBKzI7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9V2VzdG1pbnN0ZXI7c3RhdGU9RW5nbGFuZDtjb3VudHk9TG9uZG9uO2NhdGVnb3J5SWQ9YnVpbGRpbmc7c291cmNlU3lzdGVtPWludGVybmFsO25sYXQ9NTEuNTAzMTUwOTM5OTQxNDA2O25sb249LTAuMTI2NzgwMDAzMzA5MjQ5ODg";
-                        GeocodingResult.Type type = GeocodingResult.Type.ADDRESS;
-                        String title = "10 Downing Street";
-                        String addressText = "Westminster, London, SW1A 2";
-                        Address address = null;
-                        String uri = "https://places.api.here.com/places/v1/places/loc-dmVyc2lvbj0xO3RpdGxlPTEwK0Rvd25pbmcrU3RyZWV0O2xhbmc9ZW47bGF0PTUxLjUwMzQxMDMzOTM1NTQ3O2xvbj0tMC4xMjc2NDk5OTI3MDQzOTE0ODtzdHJlZXQ9RG93bmluZytTdHJlZXQ7aG91c2U9MTA7Y2l0eT1Mb25kb247cG9zdGFsQ29kZT1TVzFBKzI7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9V2VzdG1pbnN0ZXI7c3RhdGU9RW5nbGFuZDtjb3VudHk9TG9uZG9uO2NhdGVnb3J5SWQ9YnVpbGRpbmc7c291cmNlU3lzdGVtPWludGVybmFsO25sYXQ9NTEuNTAzMTUwOTM5OTQxNDA2O25sb249LTAuMTI2NzgwMDAzMzA5MjQ5ODg;context\\\\u003dZmxvdy1pZD1iMTM3ZDY1Yi02N2IyLTU3OGUtYTVlZi0xZjJmYTY3ODRkOTVfMTUyNzcwNDAyNDYyN181NDYyXzU4MTEmcmFuaz0w";
-                        LatLng location = LatLng.fromDegrees(51.50341, -0.12765);
-                        GeocodingResult from = GeocodingResult.create(id, type, title, addressText, address, uri, location);
-                        //finish();
-                        id = "loc-dmVyc2lvbj0xO3RpdGxlPTEyOCtMb3Jkc2hpcCtMYW5lO2xhbmc9ZW47bGF0PTUxLjQ1NjAzMTc5OTMxNjQwNjtsb249LTAuMDc2MzAzMjI4NzM1OTIzNzc7c3RyZWV0PUxvcmRzaGlwK0xhbmU7aG91c2U9MTI4O2NpdHk9TG9uZG9uO3Bvc3RhbENvZGU9U0UyMis4SEQ7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9RWFzdCtEdWx3aWNoO3N0YXRlPUVuZ2xhbmQ7Y291bnR5PUxvbmRvbjtjYXRlZ29yeUlkPWJ1aWxkaW5nO3NvdXJjZVN5c3RlbT1pbnRlcm5hbDtubGF0PTUxLjQ1NTk3NDU3ODg1NzQyO25sb249LTAuMDc2MjIwMDgwMjU2NDYyMQ";
-                        title = "128 Lordship Lane";
-                        addressText = "East Dulwich, London, SE22 8HD";
-                        uri = "https://places.api.here.com/places/v1/places/loc-dmVyc2lvbj0xO3RpdGxlPTEyOCtMb3Jkc2hpcCtMYW5lO2xhbmc9ZW47bGF0PTUxLjQ1NjAzMTc5OTMxNjQwNjtsb249LTAuMDc2MzAzMjI4NzM1OTIzNzc7c3RyZWV0PUxvcmRzaGlwK0xhbmU7aG91c2U9MTI4O2NpdHk9TG9uZG9uO3Bvc3RhbENvZGU9U0UyMis4SEQ7Y291bnRyeT1HQlI7ZGlzdHJpY3Q9RWFzdCtEdWx3aWNoO3N0YXRlPUVuZ2xhbmQ7Y291bnR5PUxvbmRvbjtjYXRlZ29yeUlkPWJ1aWxkaW5nO3NvdXJjZVN5c3RlbT1pbnRlcm5hbDtubGF0PTUxLjQ1NTk3NDU3ODg1NzQyO25sb249LTAuMDc2MjIwMDgwMjU2NDYyMQ;context\\\\u003dZmxvdy1pZD04OTIxYTljMy1hOGI2LTU3MTItODQ0ZS0zNzM5ZjVkZjljMmNfMTUyNzcwNDA0MTA1NV8xNDg1XzQ2MTYmcmFuaz0w";
-                        location = LatLng.fromDegrees(51.456032, -0.076303);
-                        */
+
+                        f = r.nextInt(5);
+                        String custStory = dataSnapshot.child("customer" + f).getValue(String.class);
+                        f = r.nextInt(9);
+                        String custName = dataSnapshot.child("name" + f).getValue(String.class);
 
                         //GeocodingResult to = GeocodingResult.create(id, type, title, addressText, address, uri, location);
                         pickup = from;
@@ -273,6 +263,10 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
                                 Double.parseDouble(ss[6].substring(0, ss[6].length() - 8)));
                         toLatLong = LatLng.fromDegrees( Double.parseDouble(ss[5].substring(0, ss[5].length() - 5)),
                                 Double.parseDouble(ss[6].substring(0, ss[6].length() - 8)));
+
+                        ((TextView)findViewById(R.id.textView_nextRide_title)).setText( custName );
+                        ((TextView)findViewById(R.id.textView_nextRide_adress)).setText( addressText );
+                        ((TextView)findViewById(R.id.textView_nextRide_story)).setText( custStory );
                     }
 
                     @Override

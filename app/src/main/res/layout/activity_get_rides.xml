@@ -62,13 +62,39 @@
 
     </FrameLayout>
 
-    <ImageButton
-        android:id="@+id/next_ride_imagebutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:onClick="onNextRideButtonClicked"
-        app:srcCompat="@drawable/next_ride_robinson" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/next_ride_imagebutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:onClick="onNextRideButtonClicked"
+            app:srcCompat="@drawable/next_ride_robinson" />
+
+        <TextView
+            android:id="@+id/textView_nextRide_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView_nextRide_adress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView_nextRide_story"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </LinearLayout>
+    <!--android:visibility="invisible"/-->
+
 </RelativeLayout>
