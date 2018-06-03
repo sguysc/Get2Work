@@ -119,19 +119,27 @@ def learnChoiceVsOffer(Emp,sw2srt,empRealChoiceStr):
     #pdb.set_trace()
     return
     
+def plusOneGen():
+    i=0
+    while True:
+        yield i
+        i+=1
 
-    
-#import the package:    
+
+#import the get to work package:    
 import get2work as g2w
+import numpy as np
 
-#### create employees:
-emps=[g2w.emp(12,'roee','sales',25,0.5,100), g2w.emp(12,'guy','sales',45,0.4,125),
-      g2w.emp(12,'amihay','sales',30,0.5,90), g2w.emp(12,'amir','sales',45,0.4,250)]
+#Choose simulation True or False:
+SimMode=False
 
-
-SimMode=True
-
+#%% Make \ Obtain employees:
 if SimMode:
+    #### create employees:
+    emps=[g2w.emp(12,'roee','sales',25,0.5,100),
+          g2w.emp(12,'guy','sales',45,0.4,125),
+          g2w.emp(12,'amihay','sales',30,0.5,90),
+          g2w.emp(12,'amir','sales',45,0.4,250)]
     # set employees transport preferences:
     emps[0].setEmpPref(pBus=0.2,pTaxi=0.6,pWalk=0.1,pBike=0.1)
     emps[1].setEmpPref(pBus=0.3,pTaxi=0.5,pWalk=0.1,pBike=0.1)
@@ -139,38 +147,95 @@ if SimMode:
     emps[3].setEmpPref(pBus=0.3,pTaxi=0.5,pWalk=0.1,pBike=0.1)
 else:
     # initiate firebase connection:
+    emps=[]
     fb=g2w.initDataBase()
-
+    aaa=fb.get('/Here',None)
+    for ind, empName in zip(range(len(aaa)),aaa.keys()):
+        salary = np.random.randint(25,45)
+        hoursPerClient=np.random.rand()
+        netIncomeFromClient=60+200*np.random.rand()
+        E=g2w.emp(ind,empName,'sales',salary,hoursPerClient,netIncomeFromClient)
+        E.setEmpPref(pBus=np.random.rand(),
+                     pTaxi=np.random.rand(),
+                     pWalk=np.random.rand(),
+                     pBike=np.random.rand())
+        emps.append(E)
+#%%
+        
 emptyOffer = [('walk', (0,0)), ('bus', (0,0)), ('bike', (0,0)), ('taxi', (0,0))]
 import time
-#TODO: change to while true instead of for loop
-for iii in range(15):
+
+if SimMode:
+    rng=range(15)
+else:
+    rng=plusOneGen()
+
+for iii in rng:
     if SimMode:
         fbRes=g2w.simGetCommutes()
         avlblTrns=fbRes
         
     for e in emps:
         if not SimMode:
-            fbRes=fb.get('/' + e.name, None)
-            if True: #TODO: replace by 'needs an offer'
+            pdb.set_trace()
+            fbRes=fb.get('/Here/' + e.name + '/ride', None)
+            usedList=sum([int(vv['used']) for vv in [v for v in list(fbRes.values())]])
+            numEmptyLeafs=sum([int(vv['leafs']=='') for vv in [v for v in list(fbRes.values())]])
+            if 4==numEmptyLeafs: #Needs an offer (promotion)
+                print('')
+                print('Employee: ' + e.name + ', promotion needed:')
                 avlblTrns=g2w.fb2Trns(fbRes)
-                g2w.calcTtlInc(e,avlblTrns)
-            else:
-                # if doesnt need ride, then go to next employee
+                ttlInc=g2w.calcTtlInc(e,avlblTrns)
+                # calculate offer \ promotion based on ttlInc:
+                sw2srt=getEmpOffer(e,ttlInc)
+                if None == sw2srt:
+                    #empty offer
+                    for trnsTypesStr in e.cmpnyAg.geenIndex:
+                        fb.put('/Here/' + e.name + '/ride/' + trnsTypesStr, 'leafs', '0')
+                        fb.put('/Here/' + e.name + '/ride/' + trnsTypesStr, 'used', '1')
+                else:
+                    #set leafs:
+                    for trnsType in sw2srt:
+                        fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', str(trnsType[1][1]))
+                        fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'used', '1')
+                    
+            elif 4==usedList:
+                # wait for input from user
+                continue
+            elif 1==usedList:
+                # learn from choice:
+                for k, val in fbRes.items():
+                    if val=='1':
+                        empRealChoiceStr=k
+                        break
+                #recalculate offer:
+                avlblTrns=g2w.fb2Trns(fbRes)
+                ttlInc=g2w.calcTtlInc(e,avlblTrns)
+                sw2srt=getEmpOffer(e,ttlInc)
+                #learn from choice:
+                learnChoiceVsOffer(e,sw2srt,empRealChoiceStr)
+                fb.put('/Here/' + e.name + '/ride/' + empRealChoiceStr, 'used', '1')
                 continue
             
-        print('')
-        print('Employee: ' + e.name + ':')
-        # calculate total income VS transportation type:
-        ttlInc=g2w.calcTtlInc(e,avlblTrns)
-        print('Total income:' + str(ttlInc))
-        # calculate offer \ promotion based on ttlInc:
-        sw2srt=getEmpOffer(e,ttlInc)
-        if None == sw2srt:
-            # No "win win win" option :-(
-            empRealChoiceStr=getEmpChoice(e,emptyOffer)
         else:
-            empRealChoiceStr=getEmpChoice(e,sw2srt)
-            learnChoiceVsOffer(e,sw2srt,empRealChoiceStr)
+            ttlInc=g2w.calcTtlInc(e,avlblTrns)
+            
+            print('')
+            print('Employee: ' + e.name + ':')
+            # calculate total income VS transportation type:
+            
+            print('Total income:' + str(ttlInc))
+            # calculate offer \ promotion based on ttlInc:
+            sw2srt=getEmpOffer(e,ttlInc)
+            if None == sw2srt:
+                # No "win win win" option :-(
+                empRealChoiceStr=getEmpChoice(e,emptyOffer)
+            else:
+                empRealChoiceStr=getEmpChoice(e,sw2srt)
+                learnChoiceVsOffer(e,sw2srt,empRealChoiceStr)
     if not SimMode:        
-        time.sleep(4) # pause 4 sec
+        time.sleep(1) # pause 1 sec
+        
+        
+        
+        
