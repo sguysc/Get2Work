@@ -114,13 +114,15 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
             PriceEstimate price = offer.getEstimatedPrice();
             Random r = new Random();
 
-            myRef = database.getReference("Here/" + HereMobilitySdk.getUserId());
-            //myRef = myRef.child("Taxi" + String.valueOf(r.nextInt(100)));//offer.getSupplier().getEnglishName());
+            myRef = database.getReference("Here/" + HereMobilitySdk.getUserId() + "/ride");
+            //myRef = myRef.child("Taxi + String.valueOf(r.nextInt(100)));//offer.getSupplier().getEnglishName());
             //myRef = myRef.child("Taxi");
-            updateRidesCosts( myRef.child("Taxi") );
-            updateRidesCosts( myRef.child("Bus") );
-            updateRidesCosts( myRef.child("Bike") );
-            updateRidesCosts( myRef.child("Walk") );
+            updateRidesCosts( myRef.child("taxi") );
+            updateRidesCosts( myRef.child("bus") );
+            updateRidesCosts( myRef.child("bike") );
+            updateRidesCosts( myRef.child("walk") );
+
+
 
             is1stUpdate = false;
         }
@@ -257,7 +259,7 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
             childUpdates.put("time", i1*2);
 
         childUpdates.put("leafs", "");
-        myRef.updateChildren( childUpdates);
+        //myRef.updateChildren( childUpdates);
 
     }
 

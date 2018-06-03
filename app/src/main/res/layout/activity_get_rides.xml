@@ -48,7 +48,8 @@
         android:layout_margin="10dp"
         android:background="@color/aqua_marine"
         android:text="@string/next"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="invisible"/>
 
     <FrameLayout
         android:id="@+id/ride_details_container"
@@ -60,41 +61,77 @@
         android:elevation="5dp"
         tools:ignore="UnusedAttribute">
 
+
     </FrameLayout>
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageView_getRidesBG"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:scaleType="centerCrop"
 
-        <ImageButton
-            android:id="@+id/next_ride_imagebutton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:onClick="onNextRideButtonClicked"
-            app:srcCompat="@drawable/next_ride_robinson" />
+        app:srcCompat="@drawable/get_rides_bg" />
 
-        <TextView
-            android:id="@+id/textView_nextRide_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+    <ImageView
+        android:id="@+id/imageView_get_rides_button"
+        android:layout_width="187dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="465dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="onNextRideButtonClicked"
+        app:srcCompat="@drawable/get_rides_button" />
 
-        <TextView
-            android:id="@+id/textView_nextRide_adress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+    <TextView
+        android:id="@+id/textView_nextRide_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="120px"
+        android:layout_marginTop="309px"
+        android:font = "@font/assistant_bold"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="#A5E0E2"
+        android:text="TextView" />
 
-        <TextView
-            android:id="@+id/textView_nextRide_story"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textView_NextDestination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120px"
+        android:layout_marginTop="240px"
+        android:font = "@font/assistant_regular"
+        android:textSize="16dp"
+        android:textColor="#F1F1F2"
+        android:text="Next Destination" />
+
+    <TextView
+        android:id="@+id/textView_nextRide_adress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="255px"
+        android:layout_marginTop="402px"
+        android:font = "@font/assistant_regular"
+        android:textSize="16dp"
+        android:textColor="#F1F1F2"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView_nextRide_story"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="300dp"
+        android:font = "@font/assistant_regular"
+        android:textSize="16dp"
+        android:textColor="#F1F1F2"
+        android:lineSpacingExtra="21px"
+        android:text="TextView" />
+
     <!--android:visibility="invisible"/-->
 
 </RelativeLayout>

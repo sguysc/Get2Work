@@ -19,8 +19,14 @@ import android.widget.Toast;
 
 import com.Get2Work.test.rides.RidesAdapter;
 import com.google.common.collect.Lists;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.here.mobility.sdk.core.HereMobilitySdk;
+import com.here.mobility.sdk.core.geo.Address;
+import com.here.mobility.sdk.core.geo.LatLng;
 import com.here.mobility.sdk.core.net.ResponseException;
 import com.here.mobility.sdk.core.net.ResponseFuture;
 import com.here.mobility.sdk.core.net.ResponseListener;
@@ -36,9 +42,11 @@ import com.here.mobility.sdk.demand.TaxiRideOffer;
 import com.Get2Work.test.R;
 import com.Get2Work.test.public_transport.PublicTransportActivity;
 import com.Get2Work.test.ride_status.RideStatusActivity;
+import com.here.mobility.sdk.map.geocoding.GeocodingResult;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**********************************************************
  * Copyright © 2018 HERE Global B.V. All rights reserved. *
@@ -68,7 +76,10 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
      * Use DemandClient to request ride.
      */
     private DemandClient demandClient;
-    
+
+    // Get2Work
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +88,41 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
         demandClient = DemandClient.newInstance(this);
 
         updateUI();
+        // Get2Work
+        database = FirebaseDatabase.getInstance();
+        database.getReference("Here/"+ HereMobilitySdk.getUserId()).addValueEventListener(//addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        String[] leafs = new String[4];
+                        String[] prices = new String[4];
+                        String[] times = new String[4];
+
+                        leafs[0] = dataSnapshot.child("ride/taxi/leafs").getValue(String.class);
+                        leafs[1] = dataSnapshot.child("ride/bus/leafs").getValue(String.class);
+                        leafs[2] = dataSnapshot.child("ride/bike/leafs").getValue(String.class);
+                        leafs[3] = dataSnapshot.child("ride/walk/leafs").getValue(String.class);
+
+                        ((TextView)findViewById(R.id.editText_1st))
+                                .setText( leafs[0] );
+                        ((TextView)findViewById(R.id.editText_2nd))
+                                .setText( leafs[1] );
+                        ((TextView)findViewById(R.id.editText_3rd))
+                                .setText( leafs[2] );
+                        ((TextView)findViewById(R.id.editText_4th))
+                                .setText( leafs[3] );
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                        // [START_EXCLUDE]
+                        //setEditingEnabled(true);
+                        // [END_EXCLUDE]
+                    }
+                });
     }
 
 

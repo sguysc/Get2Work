@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.here.mobility.sdk.common.util.PermissionUtils;
+import com.here.mobility.sdk.core.HereMobilitySdk;
 import com.here.mobility.sdk.core.auth.UserAuthenticationException;
 import com.here.mobility.sdk.core.geo.Address;
 import com.here.mobility.sdk.core.geo.LatLng;
@@ -266,7 +268,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
 
                         ((TextView)findViewById(R.id.textView_nextRide_title)).setText( custName );
                         ((TextView)findViewById(R.id.textView_nextRide_adress)).setText( addressText );
-                        ((TextView)findViewById(R.id.textView_nextRide_story)).setText( custStory );
+                        ((TextView)findViewById(R.id.textView_nextRide_story)).setText( Html.fromHtml( "<b>Comments:</b><br>" + custStory ) );
                     }
 
                     @Override
@@ -523,6 +525,9 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
         // Remove me
         //RideWaypoints rideWaypoints = RideWaypoints.create(LatLng.fromDegrees(51.503497, -0.127367), LatLng.fromDegrees(51.495530, -0.131193));
         RideWaypoints rideWaypoints = RideWaypoints.create(fromLatLong, toLatLong);
+
+        this.passengerDetails = setPassengerDetails();
+
         BookingConstraints constraints = BookingConstraints.create(1, 1);
         requestRideOffers(rideWaypoints, constraints, "", null); //1L
         // Remove me
@@ -544,6 +549,20 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
         this.passengerDetails = passengerDetails;
         RideWaypoints rideWaypoints = RideWaypoints.create(pickup.getLocation(),destination.getLocation());
         requestRideOffers(rideWaypoints, constraints, note, preBookTime);
+    }
+
+
+    private PassengerDetails setPassengerDetails(){
+        PassengerDetails passengerDetails = null;
+        String name = HereMobilitySdk.getUserId();
+        String phone = "+97277722288";
+
+        if (!name.isEmpty() && !phone.isEmpty()){
+            passengerDetails = PassengerDetails.builder()
+                    .setName(name)
+                    .setPhoneNumber(phone).build();
+        }
+        return passengerDetails;
     }
 
 
@@ -686,7 +705,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
     private void showRegistrationDialog() {
         RegistrationDialog dialog = new RegistrationDialog(GetRidesActivity.this);
         dialog.setPositiveButton(R.string.register, (d, which) -> {
-            userName = dialog.getUserName();
+            userName = "amihay";//dialog.getUserName();
             if (!userName.isEmpty()){
 
                 // The user registration should be done with your app's backend (see the documentation for more info).
@@ -721,8 +740,9 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
 
         //show of dismiss button according to rides exist.
         boolean hideRidesButton = activeRides.size() == 0;
-        findViewById(R.id.show_future_rides_button)
-                .setVisibility(hideRidesButton ? View.GONE : View.VISIBLE);
+        // Amihay: removed button
+        //findViewById(R.id.show_future_rides_button)
+        //        .setVisibility(hideRidesButton ? View.GONE : View.VISIBLE);
     }
 
 
