@@ -45,7 +45,7 @@
     <string name="next_ride_from_adress">10 Downing Street, Westminster, London, SW1A 2</string>
     <string name="next_ride_to_adress">128 Lordship Ln, East Dulwich, London, SE22 8HD</string>
 
-    <string name="ride_offer_scpaceship"><b>Space ship</b>\n1 min, 300 Leaves\nRecommended</string>
+    <string name="ride_offer_scpaceship"><b>Space ship</b>\n1 min, 300 Leaves</string>
     <string name="ride_offer_bicycle"><b>Bicycle</b>\n20 min, 2 Leaves</string>
     <string name="ride_offer_bus"><b>Bus</b>\n60 min, 30 Leaves</string>
     <string name="ride_offer_taxi"><b>Taxi</b>\n10 min, 17 Leaves</string>

@@ -80,6 +80,9 @@
                 android:minLines="2"
                 android:paddingStart="70dp"
                 android:gravity="center_vertical"
+                android:font = "@font/assistant_regular"
+                android:textSize="16dp"
+                android:lineSpacingExtra="21px"
                 android:onClick="onAnyButtonClicked"
                 android:text="@string/ride_offer_scpaceship" />
 
@@ -95,6 +98,9 @@
                 android:inputType="textMultiLine"
                 android:paddingStart="70dp"
                 android:gravity="center_vertical"
+                android:font = "@font/assistant_regular"
+                android:textSize="16dp"
+                android:lineSpacingExtra="21px"
                 android:onClick="onAnyButtonClicked"
                 android:text="@string/ride_offer_bicycle" />
 
@@ -110,6 +116,9 @@
                 android:minLines="2"
                 android:paddingStart="70dp"
                 android:gravity="center_vertical"
+                android:font = "@font/assistant_regular"
+                android:textSize="16dp"
+                android:lineSpacingExtra="21px"
                 android:onClick="onAnyButtonClicked"
                 android:text="Taxi\n10 min, 17 Leaves" />
 
@@ -125,6 +134,9 @@
                 android:minLines="2"
                 android:paddingStart="70dp"
                 android:gravity="center_vertical"
+                android:font = "@font/assistant_regular"
+                android:textSize="16dp"
+                android:lineSpacingExtra="21px"
                 android:onClick="onAnyButtonClicked"
                 android:text="@string/ride_offer_bus" />
 

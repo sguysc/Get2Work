@@ -95,24 +95,33 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        String[] leafs = new String[4];
+                        String[] leaves = new String[4];
                         String[] prices = new String[4];
                         String[] times = new String[4];
 
-                        leafs[0] = dataSnapshot.child("ride/taxi/leafs").getValue(String.class);
-                        leafs[1] = dataSnapshot.child("ride/bus/leafs").getValue(String.class);
-                        leafs[2] = dataSnapshot.child("ride/bike/leafs").getValue(String.class);
-                        leafs[3] = dataSnapshot.child("ride/walk/leafs").getValue(String.class);
+                        leaves[0] = dataSnapshot.child("ride/taxi/leafs").getValue(String.class);
+                        leaves[1] = dataSnapshot.child("ride/bus/leafs").getValue(String.class);
+                        leaves[2] = dataSnapshot.child("ride/bike/leafs").getValue(String.class);
+                        leaves[3] = dataSnapshot.child("ride/walk/leafs").getValue(String.class);
+
+                        times[0] = dataSnapshot.child("ride/taxi/times").getValue(String.class);
+                        times[1] = dataSnapshot.child("ride/bus/times").getValue(String.class);
+                        times[2] = dataSnapshot.child("ride/bike/times").getValue(String.class);
+                        times[3] = dataSnapshot.child("ride/walk/times").getValue(String.class);
 
                         ((TextView)findViewById(R.id.editText_1st))
-                                .setText( leafs[0] );
+                                .setText( results2string(0, leaves, times) ); //times[0] + " min.\n" + leaves[0] + " Leaves"
                         ((TextView)findViewById(R.id.editText_2nd))
-                                .setText( leafs[1] );
+                                .setText( results2string(1, leaves, times) );
                         ((TextView)findViewById(R.id.editText_3rd))
-                                .setText( leafs[2] );
+                                .setText( results2string(2, leaves, times) );
                         ((TextView)findViewById(R.id.editText_4th))
-                                .setText( leafs[3] );
+                                .setText( results2string(3, leaves, times) );
 
+                    }
+
+                    private String results2string(Integer idx, String[] leaves, String[] times){
+                        return times[idx] + " min.\n" + leaves[idx] + " Leaves";
                     }
 
                     @Override
