@@ -179,7 +179,10 @@ for iii in rng:
         if not SimMode:
             pdb.set_trace()
             fbRes=fb.get('/Here/' + e.name + '/ride', None)
-            usedList=sum([int(vv['used']) for vv in [v for v in list(fbRes.values())]])
+            try:
+                usedList=sum([int(vv['used']) for vv in [v for v in list(fbRes.values())]])
+            except:
+                usedList=0
             numEmptyLeafs=sum([int(vv['leafs']=='') for vv in [v for v in list(fbRes.values())]])
             if 4==numEmptyLeafs: #Needs an offer (promotion)
                 print('')

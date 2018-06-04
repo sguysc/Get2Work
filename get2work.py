@@ -130,7 +130,7 @@ def fb2Trns(trnsDict):
         if ''==priceStr:
             continue
         else:
-            if priceStr.count(' ')==1:
+            if priceStr.count(' ')<=1:
                 price=float(priceStr.split(' ')[0])
             else:
                 low=float(priceStr.split(' ')[0])
