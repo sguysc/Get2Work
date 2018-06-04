@@ -281,13 +281,18 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
         Toast.makeText(this, "This is my Toast message!",
                 Toast.LENGTH_LONG).show();
 
-        ((ImageView)findViewById(R.id.imageView_1st)).setImageResource(R.drawable.bus);
+        //((ImageView)findViewById(R.id.imageView_1st)).setImageResource(R.drawable.bus);
 
-        String styledText = "<b>Bus</b><br>60 min, 30 Leaves";
+        String styledText = "<b>Bus</b><br>60 min, 30 Leaves" +
+                String.format("<img src=\"%s\"/>", R.drawable.leaf);
         ((TextView)findViewById(R.id.editText_1st))
                 .setText( Html.fromHtml( styledText ) );
 
-        //listener.rideItemSelected(dataSource.get(1));
+        styledText = String.format("<img src=\"%s\"/>", R.drawable.leaf);
+        //((ImageView)findViewById(R.id.imageView_2nd)).setImageResource(R.drawable.leaf);
+        ((TextView)findViewById(R.id.editText_2nd))
+                .setText( Html.fromHtml( styledText ) );
+
         findViewById(getResources().getIdentifier("book_button", "id", getPackageName()))
                 .callOnClick();
     }

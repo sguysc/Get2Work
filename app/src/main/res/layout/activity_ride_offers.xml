@@ -17,118 +17,134 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
 
-    <GridLayout
-        android:layout_width="382dp"
-        android:layout_height="511dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/white">
+    </android.support.v7.widget.RecyclerView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="312dp"
+        tools:layout_editor_absoluteY="322dp">
 
         <ImageView
-            android:id="@+id/imageView_1st"
+            android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:onClick="onAnyButtonClicked"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/rides_bg" />
 
-            app:srcCompat="@android:drawable/sym_def_app_icon"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="211dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView_2nd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:onClick="onAnyButtonClicked"
+            <TextView
+                android:id="@+id/textView_rides_title"
+                android:layout_width="wrap_content"
+                android:layout_height="260px"
+                android:layout_marginBottom="0dp"
+                android:gravity="bottom"
+                android:background="@drawable/rides_header"
+                android:paddingStart="120px"
+                android:font = "@font/assistant_bold"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="#A5E0E2"
+                android:text="David Beckham" />
 
-            android:layout_column="0"
-            android:layout_row="1"
-            app:srcCompat="@drawable/bicycle" />
+            <TextView
+                android:id="@+id/textView_rides_adress"
+                android:layout_below="@id/textView_rides_title"
+                android:layout_width="wrap_content"
+                android:layout_height="184px"
+                android:layout_marginTop="-1px"
+                android:gravity="top"
+                android:paddingStart="230px"
+                android:paddingTop="10dp"
+                android:background="@drawable/rides_address"
+                android:font = "@font/assistant_regular"
+                android:textSize="16dp"
+                android:textColor="#F1F1F2"
+                android:text="London Bridge 3" />
 
-        <ImageView
-            android:id="@+id/imageView_3rd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:onClick="onAnyButtonClicked"
+            <TextView
+                android:id="@+id/editText_1st"
+                android:layout_below="@id/textView_rides_adress"
+                android:background="@drawable/bike_but"
+                android:layout_width="wrap_content"
+                android:layout_height="234px"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:minLines="2"
+                android:paddingStart="70dp"
+                android:gravity="center_vertical"
+                android:onClick="onAnyButtonClicked"
+                android:text="@string/ride_offer_scpaceship" />
 
-            android:layout_column="0"
-            android:layout_row="2"
-            app:srcCompat="@drawable/taxi" />
+            <TextView
+                android:id="@+id/editText_2nd"
+                android:layout_below="@+id/editText_1st"
+                android:background="@drawable/bike_but"
+                android:layout_width="wrap_content"
+                android:layout_height="234px"
+                android:ems="10"
+                android:maxLines="3"
+                android:minLines="2"
+                android:inputType="textMultiLine"
+                android:paddingStart="70dp"
+                android:gravity="center_vertical"
+                android:onClick="onAnyButtonClicked"
+                android:text="@string/ride_offer_bicycle" />
 
-        <ImageView
-            android:id="@+id/imageView_4th"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:onClick="onAnyButtonClicked"
+            <TextView
+                android:id="@+id/editText_3rd"
+                android:layout_below="@+id/editText_2nd"
+                android:background="@drawable/taxi_but"
+                android:layout_width="wrap_content"
+                android:layout_height="234px"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:minLines="2"
+                android:paddingStart="70dp"
+                android:gravity="center_vertical"
+                android:onClick="onAnyButtonClicked"
+                android:text="Taxi\n10 min, 17 Leaves" />
 
-            android:layout_column="0"
-            android:layout_row="3"
-            app:srcCompat="@drawable/bus" />
+            <TextView
+                android:id="@+id/editText_4th"
+                android:layout_below="@+id/editText_3rd"
+                android:background="@drawable/bus_but"
+                android:layout_width="wrap_content"
+                android:layout_height="234px"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:minLines="2"
+                android:paddingStart="70dp"
+                android:gravity="center_vertical"
+                android:onClick="onAnyButtonClicked"
+                android:text="@string/ride_offer_bus" />
 
+            <TextView
+                android:id="@+id/editText_remainBudget"
+                android:background="@drawable/rides_remaining_budget"
+                android:layout_width="wrap_content"
+                android:layout_height="126px"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:ems="10"
+                android:paddingStart="260dp"
+                android:gravity="center_vertical"
+                android:font = "@font/assistant_bold"
+                android:textSize="16dp"
+                android:textColor="#A5E0E2"
+                android:text="@string/ride_remain_budget" />
 
-        <TextView
-            android:id="@+id/editText_1st"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_column="1"
-            android:layout_row="0"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:maxLines="3"
-            android:minLines="2"
-            android:text="@string/ride_offer_scpaceship" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/editText_2nd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_column="1"
-            android:layout_row="1"
-            android:ems="10"
-            android:maxLines="3"
-            android:minLines="2"
-            android:inputType="textMultiLine"
-            android:text="@string/ride_offer_bicycle" />
-
-        <TextView
-            android:id="@+id/editText_3rd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_column="1"
-            android:layout_row="2"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:maxLines="3"
-            android:minLines="2"
-            android:text="Taxi\n10 min, 17 Leaves" />
-
-        <TextView
-            android:id="@+id/editText_4th"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_column="1"
-            android:layout_row="3"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:maxLines="3"
-            android:minLines="2"
-            android:text="@string/ride_offer_bus" />
-
-    </GridLayout>
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
