@@ -177,10 +177,14 @@ for iii in rng:
         
     for e in emps:
         if not SimMode:
-            pdb.set_trace()
+            #pdb.set_trace()
             fbRes=fb.get('/Here/' + e.name + '/ride', None)
-            usedList=sum([int(vv['used']) for vv in [v for v in list(fbRes.values())]])
+            try:
+                usedList=sum([int(vv['used']) for vv in [v for v in list(fbRes.values())]])
+            except:
+                usedList=0
             numEmptyLeafs=sum([int(vv['leafs']=='') for vv in [v for v in list(fbRes.values())]])
+            #print("guy " + str(numEmptyLeafs))
             if 4==numEmptyLeafs: #Needs an offer (promotion)
                 print('')
                 print('Employee: ' + e.name + ', promotion needed:')
@@ -190,15 +194,24 @@ for iii in rng:
                 sw2srt=getEmpOffer(e,ttlInc)
                 if None == sw2srt:
                     #empty offer
+                    #print("guy " + str(sw2srt))
                     for trnsTypesStr in e.cmpnyAg.geenIndex:
                         fb.put('/Here/' + e.name + '/ride/' + trnsTypesStr, 'leafs', '0')
                         fb.put('/Here/' + e.name + '/ride/' + trnsTypesStr, 'used', '1')
                 else:
                     #set leafs:
-                    for trnsType in sw2srt:
-                        fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', str(trnsType[1][1]))
-                        fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'used', '1')
-                    
+                    try:
+                        guy = 0
+                        for trnsType in sw2srt:
+                            if(trnsType[1][0] > 0):
+                                guy = trnsType[1][0]
+                                fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', "%.0f" % trnsType[1][0])
+                            else:
+                                fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', "%.0f" % (guy * np.random.rand(1)))
+                            fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'used', '1')
+                    except:
+                        print("lost connection. Oh well...")
+                        
             elif 4==usedList:
                 # wait for input from user
                 continue
