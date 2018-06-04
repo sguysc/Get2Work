@@ -71,42 +71,6 @@
             <TextView
                 android:id="@+id/editText_1st"
                 android:layout_below="@id/textView_rides_adress"
-                android:background="@drawable/bike_but"
-                android:layout_width="wrap_content"
-                android:layout_height="234px"
-                android:ems="10"
-                android:inputType="textMultiLine"
-                android:maxLines="3"
-                android:minLines="2"
-                android:paddingStart="70dp"
-                android:gravity="center_vertical"
-                android:font = "@font/assistant_regular"
-                android:textSize="16dp"
-                android:lineSpacingExtra="21px"
-                android:onClick="onAnyButtonClicked"
-                android:text="@string/ride_offer_scpaceship" />
-
-            <TextView
-                android:id="@+id/editText_2nd"
-                android:layout_below="@+id/editText_1st"
-                android:background="@drawable/bike_but"
-                android:layout_width="wrap_content"
-                android:layout_height="234px"
-                android:ems="10"
-                android:maxLines="3"
-                android:minLines="2"
-                android:inputType="textMultiLine"
-                android:paddingStart="70dp"
-                android:gravity="center_vertical"
-                android:font = "@font/assistant_regular"
-                android:textSize="16dp"
-                android:lineSpacingExtra="21px"
-                android:onClick="onAnyButtonClicked"
-                android:text="@string/ride_offer_bicycle" />
-
-            <TextView
-                android:id="@+id/editText_3rd"
-                android:layout_below="@+id/editText_2nd"
                 android:background="@drawable/taxi_but"
                 android:layout_width="wrap_content"
                 android:layout_height="234px"
@@ -120,12 +84,30 @@
                 android:textSize="16dp"
                 android:lineSpacingExtra="21px"
                 android:onClick="onAnyButtonClicked"
-                android:text="Taxi\n10 min, 17 Leaves" />
+                android:text="@string/ride_offer_taxi" />
 
             <TextView
-                android:id="@+id/editText_4th"
-                android:layout_below="@+id/editText_3rd"
+                android:id="@+id/editText_2nd"
+                android:layout_below="@+id/editText_1st"
                 android:background="@drawable/bus_but"
+                android:layout_width="wrap_content"
+                android:layout_height="234px"
+                android:ems="10"
+                android:maxLines="3"
+                android:minLines="2"
+                android:inputType="textMultiLine"
+                android:paddingStart="70dp"
+                android:gravity="center_vertical"
+                android:font = "@font/assistant_regular"
+                android:textSize="16dp"
+                android:lineSpacingExtra="21px"
+                android:onClick="onAnyButtonClicked"
+                android:text="@string/ride_offer_bus" />
+
+            <TextView
+                android:id="@+id/editText_3rd"
+                android:layout_below="@+id/editText_2nd"
+                android:background="@drawable/bike_but"
                 android:layout_width="wrap_content"
                 android:layout_height="234px"
                 android:ems="10"
@@ -138,7 +120,25 @@
                 android:textSize="16dp"
                 android:lineSpacingExtra="21px"
                 android:onClick="onAnyButtonClicked"
-                android:text="@string/ride_offer_bus" />
+                android:text="@string/ride_offer_bicycle" />
+
+            <TextView
+                android:id="@+id/editText_4th"
+                android:layout_below="@+id/editText_3rd"
+                android:background="@drawable/foot_but"
+                android:layout_width="wrap_content"
+                android:layout_height="234px"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:minLines="2"
+                android:paddingStart="70dp"
+                android:gravity="center_vertical"
+                android:font = "@font/assistant_regular"
+                android:textSize="16dp"
+                android:lineSpacingExtra="21px"
+                android:onClick="onAnyButtonClicked"
+                android:text="@string/ride_offer_walk" />
 
             <TextView
                 android:id="@+id/editText_remainBudget"

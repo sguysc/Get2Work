@@ -20,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Get2Work.test.ride_offers.RideOffersActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.here.mobility.sdk.core.HereMobilitySdk;
 import com.here.mobility.sdk.demand.DemandClient;
 import com.here.mobility.sdk.demand.DriverDetails;
 import com.here.mobility.sdk.demand.PriceEstimate;
@@ -107,6 +111,9 @@ public class RideStatusActivity extends AppCompatActivity {
      */
     private TextView priceTextView;
 
+    // Get2Work
+    //private FirebaseDatabase database;
+    //private DatabaseReference myRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,6 +128,16 @@ public class RideStatusActivity extends AppCompatActivity {
         initUI();
         setRideInfo(ride);
 
+        // Get2Work
+        //database = FirebaseDatabase.getInstance();
+        //myRef = database.getReference("Here/" + HereMobilitySdk.getUserId() + "/ride");
+
+        switch(RideOffersActivity.selectedButton){
+            case 1:
+
+            case 2:
+
+        }
     }
 
 

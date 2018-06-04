@@ -49,6 +49,7 @@
     <string name="ride_offer_bicycle"><b>Bicycle</b>\n20 min, 2 Leaves</string>
     <string name="ride_offer_bus"><b>Bus</b>\n60 min, 30 Leaves</string>
     <string name="ride_offer_taxi"><b>Taxi</b>\n10 min, 17 Leaves</string>
+    <string name="ride_offer_walk"><b>Taxi</b>\n60 min, 50 Leaves</string>
 
     <string name="ride_remain_budget">732/1000</string>
 </resources>

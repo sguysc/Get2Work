@@ -117,12 +117,10 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
             myRef = database.getReference("Here/" + HereMobilitySdk.getUserId() + "/ride");
             //myRef = myRef.child("Taxi + String.valueOf(r.nextInt(100)));//offer.getSupplier().getEnglishName());
             //myRef = myRef.child("Taxi");
-            updateRidesCosts( myRef.child("taxi") );
-            updateRidesCosts( myRef.child("bus") );
-            updateRidesCosts( myRef.child("bike") );
-            updateRidesCosts( myRef.child("walk") );
-
-
+            updateRidesCosts( myRef.child("taxi"), 50, 10, 40, 5 );
+            updateRidesCosts( myRef.child("bus"), 10, 3, 60, 15 );
+            updateRidesCosts( myRef.child("bike"), 10, 0, 60, 5 );
+            updateRidesCosts( myRef.child("walk"), 0, 0, 80, 20 );
 
             is1stUpdate = false;
         }
@@ -174,16 +172,20 @@ public class RideOffersAdapter extends RecyclerView.Adapter<RideOffersAdapter.Ri
         myRef.updateChildren( childUpdates);*/
     }
 
-    private void updateRidesCosts(DatabaseReference ref){
+    private void updateRidesCosts(DatabaseReference ref, Integer maxPrice, Integer minPrice, Integer maxTime, Integer minTime){
 
         Random r = new Random();
         Map<String, Object> childUpdates = new HashMap<>();
 
-        int i1 = r.nextInt(50 - 10) + 10;
-        childUpdates.put("price", i1 );
+        int i1 = r.nextInt(maxTime - minTime) + minTime;
+        childUpdates.put("time", String.valueOf(i1));
 
-        i1 = r.nextInt(30 - 10) + 10;
-        childUpdates.put("time", i1);
+        if (maxPrice==0)
+            i1 = 0;
+        else
+            i1 = r.nextInt(maxPrice - minPrice) + minPrice;
+
+        childUpdates.put("price", String.valueOf(i1) );
 
         childUpdates.put("leafs", "");
         childUpdates.put("used", "");

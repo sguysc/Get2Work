@@ -77,6 +77,8 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
      */
     private DemandClient demandClient;
 
+    public static Integer selectedButton = 0;
+
     // Get2Work
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -90,6 +92,7 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
         updateUI();
         // Get2Work
         database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Here/" + HereMobilitySdk.getUserId() + "/ride");
         database.getReference("Here/"+ HereMobilitySdk.getUserId()).addValueEventListener(//addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -104,10 +107,10 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
                         leaves[2] = dataSnapshot.child("ride/bike/leafs").getValue(String.class);
                         leaves[3] = dataSnapshot.child("ride/walk/leafs").getValue(String.class);
 
-                        times[0] = dataSnapshot.child("ride/taxi/times").getValue(String.class);
-                        times[1] = dataSnapshot.child("ride/bus/times").getValue(String.class);
-                        times[2] = dataSnapshot.child("ride/bike/times").getValue(String.class);
-                        times[3] = dataSnapshot.child("ride/walk/times").getValue(String.class);
+                        times[0] = dataSnapshot.child("ride/taxi/time").getValue(String.class);
+                        times[1] = dataSnapshot.child("ride/bus/time").getValue(String.class);
+                        times[2] = dataSnapshot.child("ride/bike/time").getValue(String.class);
+                        times[3] = dataSnapshot.child("ride/walk/time").getValue(String.class);
 
                         ((TextView)findViewById(R.id.editText_1st))
                                 .setText( results2string(0, leaves, times) ); //times[0] + " min.\n" + leaves[0] + " Leaves"
@@ -291,6 +294,35 @@ public class RideOffersActivity extends AppCompatActivity implements RideOffersA
                 Toast.LENGTH_LONG).show();
 
         //((ImageView)findViewById(R.id.imageView_1st)).setImageResource(R.drawable.bus);
+
+        if (view.getId()==R.id.editText_1st){
+            selectedButton = 1;
+            myRef.child("/bike/used").setValue("0");
+            myRef.child("/bus/used").setValue("0");
+            //myRef.child("/taxi/used").setValue("0");
+            myRef.child("/walk/used").setValue("0");
+        }
+        else if (view.getId()==R.id.editText_2nd){
+            selectedButton = 2;
+            myRef.child("/bike/used").setValue("0");
+            //myRef.child("/bus/used").setValue("0");
+            myRef.child("/taxi/used").setValue("0");
+            myRef.child("/walk/used").setValue("0");
+        }
+        else if (view.getId()==R.id.editText_3rd){
+            selectedButton = 3;
+            //myRef.child("/bike/used").setValue("0");
+            myRef.child("/bus/used").setValue("0");
+            myRef.child("/taxi/used").setValue("0");
+            myRef.child("/walk/used").setValue("0");
+        }
+        else if (view.getId()==R.id.editText_4th){
+            selectedButton = 4;
+            myRef.child("/bike/used").setValue("0");
+            myRef.child("/bus/used").setValue("0");
+            myRef.child("/taxi/used").setValue("0");
+            //myRef.child("/walk/used").setValue("0");
+        }
 
         String styledText = "<b>Bus</b><br>60 min, 30 Leaves" +
                 String.format("<img src=\"%s\"/>", R.drawable.leaf);
