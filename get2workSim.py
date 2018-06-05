@@ -218,7 +218,7 @@ for iii in rng:
             elif 1==usedList:
                 # learn from choice:
                 for k, val in fbRes.items():
-                    if val=='1':
+                    if fbRes[k]['used']=='1':
                         empRealChoiceStr=k
                         break
                 #recalculate offer:
