@@ -27,12 +27,19 @@
         tools:layout_editor_absoluteX="312dp"
         tools:layout_editor_absoluteY="322dp">
 
-        <ImageView
+        <fragment
+            android:id="@+id/map_fragment"
+            android:name="com.here.mobility.sdk.map.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter" />
+
+        <!--ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/rides_bg" />
+            app:srcCompat="@drawable/rides_bg" /-->
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -132,12 +132,24 @@ public class RideStatusActivity extends AppCompatActivity {
         //database = FirebaseDatabase.getInstance();
         //myRef = database.getReference("Here/" + HereMobilitySdk.getUserId() + "/ride");
 
+        String toastMsg = "None";
         switch(RideOffersActivity.selectedButton){
-            case 1:
+            case 1: toastMsg = "Taxi selected";
+                    break;
 
-            case 2:
+            case 2: toastMsg = "Bus selected";
+                    break;
+
+            case 3: toastMsg = "Bicycle selected";
+                    break;
+
+            case 4: toastMsg = "Walk selected";
+                    break;
 
         }
+
+        Toast.makeText(this, toastMsg,
+                Toast.LENGTH_LONG).show();
     }
 
 
