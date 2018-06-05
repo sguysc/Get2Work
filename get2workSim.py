@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 get to work simulator
-
 Created on Thu May 31 21:01:59 2018
-
 @author: ROEE
-
-
 """
 empbusOffer={'roee':[[],[],[]],'guy':[[],[],[]]}
 savingsRoee={'maxSavings':[],'netSavings':[],'promotions':[]}
@@ -136,7 +132,7 @@ import get2work as g2w
 import numpy as np
 
 #Choose simulation True or False:
-SimMode=True
+SimMode=False
 
 #%% Make \ Obtain employees:
 if SimMode:
@@ -184,16 +180,18 @@ for iii in rng:
     for e in emps:
         if not SimMode:
             #pdb.set_trace()
-            fbRes=fb.get('/Here/' + e.name + '/ride', None)
             try:
+                fbRes=fb.get('/Here/' + e.name + '/ride', None)
+            
                 usedList=sum([int(vv['used']) for vv in [v for v in list(fbRes.values())]])
             except:
                 usedList=0
             numEmptyLeafs=sum([int(vv['leafs']=='') for vv in [v for v in list(fbRes.values())]])
-            if numEmptyLeafs < 4: #Needs an offer (promotion)
+            #print(e.name + " {}".format(numEmptyLeafs))
+            if numEmptyLeafs == 4: #Needs an offer (promotion)
                 print('')
                 print('Employee: ' + e.name + ', promotion needed:')
-                avlblTrns=g2w.fb2Trns(fbRes)
+                avlblTrns=g2w.fb2Trns(fbRes )
                 ttlInc=g2w.calcTtlInc(e,avlblTrns)
                 # calculate offer \ promotion based on ttlInc:
                 sw2srt=getEmpOffer(e,ttlInc)
@@ -212,9 +210,11 @@ for iii in rng:
                         for trnsType in sw2srt:
                             if(trnsType[1][1] > 0):
                                 guy = trnsType[1][0]
+                                print("hey " + e.name)
                                 fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', "%.0f" % trnsType[1][0])
                             else:
                                 fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', "%.0f" % (guy * np.random.rand(1)))
+                                print("ho " + e.name)
                             fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'used', '1')
                     except:
                         print("lost connection. Oh well...")
