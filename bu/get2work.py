@@ -40,7 +40,7 @@ class emp(object):
         self.svm2trns_data={'bike': [[[-1],[100]],[0,1]],
                             'bus': [[[-1],[100]],[0,1]],
                             'walk': [[[-1],[100]],[0,1]]}
-        self.svmNumElems=20
+        self.svmNumElems=10
         self.prefReal={'taxi':None,'bus':None,'bike':None,'walk':None}
         # Simulative truth (physical):
         self.cmpnyAg=cmpnyGreenAgenda()
