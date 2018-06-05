@@ -161,24 +161,37 @@ public class RideStatusActivity extends AppCompatActivity  implements MapView.Ma
         setRideInfo(ride);
 
         // Get2Work
-        ((TextView)findViewById(R.id.textView_rides_title2)).setText( GetRidesActivity.custName );
-        ((TextView)findViewById(R.id.textView_rides_adress2)).setText( GetRidesActivity.addressText );
+        ((TextView)findViewById(R.id.textView_rides_title)).setText( GetRidesActivity.custName );
+        ((TextView)findViewById(R.id.textView_rides_address)).setText( GetRidesActivity.addressText );
+        ((TextView)findViewById(R.id.editText_remainBudget)).setText( RideOffersActivity.savedLeaves );
         //database = FirebaseDatabase.getInstance();
         //myRef = database.getReference("Here/" + HereMobilitySdk.getUserId() + "/ride");
 
         String toastMsg = "None";
         switch(RideOffersActivity.selectedButton){
-            case 1: toastMsg = "Taxi selected";
-                    break;
+            case 1:   // Taxi
+                toastMsg = "Taxi selected";
+                ((TextView)findViewById(R.id.but_ride_status)).setBackgroundResource(R.drawable.taxi_but);
+                ((TextView)findViewById(R.id.but_ride_status)).setText( "A Taxi has been ordered!" );
+                break;
 
-            case 2: toastMsg = "Bus selected";
-                    break;
+            case 2:   // Bus
+                toastMsg = "Bus selected";
+                ((TextView)findViewById(R.id.but_ride_status)).setBackgroundResource(R.drawable.bus_but);
+                ((TextView)findViewById(R.id.but_ride_status)).setText( "Enjoy your bus ride!" );
+                break;
 
-            case 3: toastMsg = "Bicycle selected";
-                    break;
+            case 3:    // Bicycle
+                toastMsg = "Bicycle selected";
+                ((TextView)findViewById(R.id.but_ride_status)).setBackgroundResource(R.drawable.bike_but);
+                ((TextView)findViewById(R.id.but_ride_status)).setText( "Bicylce rent awaits you!" );
+                break;
 
-            case 4: toastMsg = "Walk selected";
-                    break;
+            case 4:   // Walk
+                toastMsg = "Walk selected";
+                ((TextView)findViewById(R.id.but_ride_status)).setBackgroundResource(R.drawable.foot_but);
+                ((TextView)findViewById(R.id.but_ride_status)).setText( "Lovely day for a walk!" );
+                break;
 
         }
 
@@ -343,6 +356,9 @@ public class RideStatusActivity extends AppCompatActivity  implements MapView.Ma
         if (driver != null) {
             driverName.setText(driver.getName());
             driverPlateVehicle.setText(driver.getDrivingLicenseId());
+
+            // Get2work
+            ((TextView)findViewById(R.id.but_ride_status)).setText( "Your driver: " + driver.getName() + "\nPlate No.: " + driver.getDrivingLicenseId());
         }
 
         //update ride price

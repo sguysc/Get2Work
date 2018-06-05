@@ -109,6 +109,7 @@ public class RideOffersActivity extends AppCompatActivity implements MapView.Map
     // Get2Work
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    public static String savedLeaves;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,7 +125,7 @@ public class RideOffersActivity extends AppCompatActivity implements MapView.Map
         updateUI();
         // Get2Work
         ((TextView)findViewById(R.id.textView_rides_title)).setText( GetRidesActivity.custName );
-        ((TextView)findViewById(R.id.textView_rides_adress)).setText( GetRidesActivity.addressText );
+        ((TextView)findViewById(R.id.textView_rides_address)).setText( GetRidesActivity.addressText );
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Here/" + HereMobilitySdk.getUserId() + "/ride");
         database.getReference("Here/"+ HereMobilitySdk.getUserId()).addValueEventListener(//addListenerForSingleValueEvent(
@@ -145,6 +146,9 @@ public class RideOffersActivity extends AppCompatActivity implements MapView.Map
                         times[1] = dataSnapshot.child("ride/bus/time").getValue(String.class);
                         times[2] = dataSnapshot.child("ride/bike/time").getValue(String.class);
                         times[3] = dataSnapshot.child("ride/walk/time").getValue(String.class);
+
+                        savedLeaves = dataSnapshot.child("history/saved").getValue(String.class);;
+                        ((TextView)findViewById(R.id.editText_remainBudget)).setText( savedLeaves );
 
                         ((TextView)findViewById(R.id.editText_1st))
                                 .setText( results2string(0, leaves, times) ); //times[0] + " min.\n" + leaves[0] + " Leaves"

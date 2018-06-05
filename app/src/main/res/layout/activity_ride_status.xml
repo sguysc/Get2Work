@@ -26,7 +26,7 @@
             android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView_rides_title2"
+            android:id="@+id/textView_rides_title"
             android:layout_width="wrap_content"
             android:layout_height="260px"
             android:layout_marginBottom="0dp"
@@ -40,8 +40,8 @@
             android:text="David Beckham" />
 
         <TextView
-            android:id="@+id/textView_rides_adress2"
-            android:layout_below="@id/textView_rides_title2"
+            android:id="@+id/textView_rides_address"
+            android:layout_below="@id/textView_rides_title"
             android:layout_width="wrap_content"
             android:layout_height="184px"
             android:layout_marginTop="-1px"
@@ -53,6 +53,23 @@
             android:textSize="16dp"
             android:textColor="#F1F1F2"
             android:text="London Bridge 3" />
+
+            <TextView
+                android:id="@+id/but_ride_status"
+                android:layout_below="@id/textView_rides_address"
+                android:background="@drawable/taxi_but"
+                android:layout_width="wrap_content"
+                android:layout_height="234px"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:minLines="2"
+                android:paddingStart="70dp"
+                android:gravity="center_vertical"
+                android:font = "@font/assistant_regular"
+                android:textSize="16dp"
+                android:lineSpacingExtra="21px"
+                android:text="Your order" />
 
             <TextView
                 android:id="@+id/editText_remainBudget"

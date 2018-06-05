@@ -23,9 +23,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_offers/RideOffersActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_offers/RideOffersActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_status/RideStatusActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_status/RideStatusActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_ride_offers.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_ride_offers.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_ride_status.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_ride_status.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -84,10 +84,10 @@
       <file leaf-file-name="RideOffersActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_offers/RideOffersActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="126" column="101" lean-forward="false" selection-start-line="124" selection-start-column="8" selection-end-line="126" selection-end-column="101" />
+            <state relative-caret-position="161">
+              <caret line="133" column="48" lean-forward="false" selection-start-line="133" selection-start-column="48" selection-end-line="133" selection-end-column="48" />
               <folding>
-                <element signature="e#7997#8023#0" expanded="true" />
+                <element signature="e#8237#8263#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -96,8 +96,8 @@
       <file leaf-file-name="RideStatusActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_status/RideStatusActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
-              <caret line="168" column="33" lean-forward="false" selection-start-line="168" selection-start-column="33" selection-end-line="168" selection-end-column="33" />
+            <state relative-caret-position="136">
+              <caret line="345" column="44" lean-forward="true" selection-start-line="345" selection-start-column="44" selection-end-line="345" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -117,16 +117,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_ride_status.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="activity_ride_status.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ride_status.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="236" column="47" lean-forward="true" selection-start-line="236" selection-start-column="47" selection-end-line="236" selection-end-column="47" />
+            <state relative-caret-position="161">
+              <caret line="250" column="24" lean-forward="false" selection-start-line="250" selection-start-column="24" selection-end-line="250" selection-end-column="24" />
               <folding>
-                <element signature="e#2728#2756#0" expanded="true" />
+                <element signature="e#3460#3488#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -147,27 +147,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RideDetailsFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/get_rides/RideDetailsFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="20" lean-forward="false" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
-              <folding>
-                <element signature="e#2976#2977#0" expanded="false" />
-                <element signature="e#3024#3025#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_ride_offers.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="activity_ride_offers.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ride_offers.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="161">
-              <caret line="149" column="12" lean-forward="false" selection-start-line="149" selection-start-column="12" selection-end-line="164" selection-end-column="25" />
+              <caret line="23" column="5" lean-forward="false" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -210,10 +197,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>active</find>
-      <find>html</find>
-      <find>button</find>
-      <find>s</find>
       <find>sdk</find>
       <find>sdkv</find>
       <find>sdkves</find>
@@ -238,8 +221,12 @@
       <find>addressText</find>
       <find>davie</find>
       <find>onma</find>
-      <find>sette</find>
       <find>oncre</find>
+      <find>sette</find>
+      <find>child</find>
+      <find>toas</find>
+      <find>drawable</find>
+      <find>listener</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -2302,11 +2289,11 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_offers/RideOffersAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-v26/activity_get_rides.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/get_rides/GetRidesActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_ride_offers.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_ride_offers.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_ride_status.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_offers/RideOffersActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_status/RideStatusActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_ride_status.xml" />
       </list>
     </option>
   </component>
@@ -2573,7 +2560,7 @@
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
       <method>
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1528231797409" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1528235911007" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2620,7 +2607,7 @@
         <option name="ADVANCED_PROFILING_ENABLED" value="false" />
       </Profilers>
       <method>
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1528231797409" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1528235911007" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2802,7 +2789,7 @@
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
       <method>
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1528231797410" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1528235911008" />
       </method>
     </configuration>
     <list size="1">
@@ -2911,7 +2898,14 @@
       <option name="project" value="LOCAL" />
       <updated>1528229830065</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Add next customer">
+      <created>1528231808144</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1528231808144</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -2925,11 +2919,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1827" height="1085" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40546218" sideWeight="0.4957651" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40546218" sideWeight="0.4957651" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -2937,7 +2930,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.5042349" order="13" side_tool="true" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38087153" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32948583" sideWeight="0.4957651" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32878152" sideWeight="0.4957651" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.49802372" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -3340,7 +3333,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-v26/activity_get_rides.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_offers/RideOffersAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -3381,31 +3373,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ride_offers.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-v26/activity_get_rides.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="149" column="12" lean-forward="false" selection-start-line="149" selection-start-column="12" selection-end-line="164" selection-end-column="25" />
+        <state relative-caret-position="169">
+          <caret line="104" column="0" lean-forward="false" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_offers/RideOffersActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="126" column="101" lean-forward="false" selection-start-line="124" selection-start-column="8" selection-end-line="126" selection-end-column="101" />
+        <state relative-caret-position="161">
+          <caret line="133" column="48" lean-forward="false" selection-start-line="133" selection-start-column="48" selection-end-line="133" selection-end-column="48" />
           <folding>
-            <element signature="e#7997#8023#0" expanded="true" />
+            <element signature="e#8237#8263#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/Get2Work/test/ride_status/RideStatusActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="168" column="33" lean-forward="false" selection-start-line="168" selection-start-column="33" selection-end-line="168" selection-end-column="33" />
+        <state relative-caret-position="136">
+          <caret line="345" column="44" lean-forward="true" selection-start-line="345" selection-start-column="44" selection-end-line="345" selection-end-column="44" />
           <folding />
         </state>
       </provider>
@@ -3415,11 +3407,22 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="236" column="47" lean-forward="true" selection-start-line="236" selection-start-column="47" selection-end-line="236" selection-end-column="47" />
+        <state relative-caret-position="161">
+          <caret line="250" column="24" lean-forward="false" selection-start-line="250" selection-start-column="24" selection-end-line="250" selection-end-column="24" />
           <folding>
-            <element signature="e#2728#2756#0" expanded="true" />
+            <element signature="e#3460#3488#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ride_offers.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="23" column="5" lean-forward="false" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
