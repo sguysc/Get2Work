@@ -162,7 +162,8 @@ public class RideOffersActivity extends AppCompatActivity implements MapView.Map
                     }
 
                     private String results2string(Integer idx, String[] leaves, String[] times){
-                        return times[idx] + " min.\n" + leaves[idx] + " Leaves";
+                        //return times[idx] + " min.\n" + leaves[idx] + " Leaves";
+                        return times[idx] + " min.   " + leaves[idx];
                     }
 
                     @Override

@@ -73,7 +73,7 @@
 
             <TextView
                 android:id="@+id/editText_remainBudget"
-                android:background="@drawable/rides_remaining_budget"
+                android:background="@drawable/monthly_reward"
                 android:layout_width="wrap_content"
                 android:layout_height="126px"
                 android:layout_alignParentBottom="true"
@@ -84,7 +84,7 @@
                 android:font = "@font/assistant_bold"
                 android:textSize="16dp"
                 android:textColor="#A5E0E2"
-                android:text="@string/ride_remain_budget" />
+                android:text="@string/monthly_reward" />
 
         </RelativeLayout>
 
