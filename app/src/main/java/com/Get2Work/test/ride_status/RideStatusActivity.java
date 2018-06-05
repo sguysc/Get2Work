@@ -1,29 +1,39 @@
 package com.Get2Work.test.ride_status;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.AnyThread;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Get2Work.test.get_rides.GetRidesActivity;
 import com.Get2Work.test.ride_offers.RideOffersActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.here.mobility.sdk.common.util.PermissionUtils;
 import com.here.mobility.sdk.core.HereMobilitySdk;
+import com.here.mobility.sdk.core.geo.LatLng;
 import com.here.mobility.sdk.demand.DemandClient;
 import com.here.mobility.sdk.demand.DriverDetails;
 import com.here.mobility.sdk.demand.PriceEstimate;
@@ -33,6 +43,13 @@ import com.here.mobility.sdk.demand.RideStatusLog;
 import com.here.mobility.sdk.demand.Supplier;
 import com.Get2Work.test.R;
 import com.Get2Work.test.util.Utils;
+import com.here.mobility.sdk.map.FusedUserLocationSource;
+import com.here.mobility.sdk.map.MapController;
+import com.here.mobility.sdk.map.MapFragment;
+import com.here.mobility.sdk.map.MapView;
+import com.here.mobility.sdk.map.Marker;
+import com.here.mobility.sdk.map.PolylineOverlay;
+import com.here.mobility.sdk.map.route.Route;
 
 
 import java.util.Locale;
@@ -40,7 +57,7 @@ import java.util.Locale;
 /**********************************************************
  * Copyright © 2018 HERE Global B.V. All rights reserved. *
  **********************************************************/
-public class RideStatusActivity extends AppCompatActivity {
+public class RideStatusActivity extends AppCompatActivity  implements MapView.MapReadyListener {
 
 
     /**
@@ -112,6 +129,14 @@ public class RideStatusActivity extends AppCompatActivity {
     private TextView priceTextView;
 
     // Get2Work
+    private static final float MAP_ZOOM = 14.5f;
+    private MapController mapController;
+    /**
+     * Location permission code.
+     */
+    private static final int LOCATION_PERMISSIONS_CODE = 42;
+    private Marker pickupMarker;
+    private Marker destinationMarker;
     //private FirebaseDatabase database;
     //private DatabaseReference myRef;
 
@@ -125,10 +150,19 @@ public class RideStatusActivity extends AppCompatActivity {
 
         //Initialize DemandClient.
         demandClient = DemandClient.newInstance(this);
+
+        //MapFragment initialization.
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map_fragment);
+        if (mapFragment != null) {
+            mapFragment.loadMapAsync(this);
+        }
+
         initUI();
         setRideInfo(ride);
 
         // Get2Work
+        ((TextView)findViewById(R.id.textView_rides_title2)).setText( GetRidesActivity.custName );
+        ((TextView)findViewById(R.id.textView_rides_adress2)).setText( GetRidesActivity.addressText );
         //database = FirebaseDatabase.getInstance();
         //myRef = database.getReference("Here/" + HereMobilitySdk.getUserId() + "/ride");
 
@@ -380,6 +414,113 @@ public class RideStatusActivity extends AppCompatActivity {
 
         if (handlerThread != null) {
             handlerThread.quit();
+        }
+    }
+
+    @Override
+    public void onMapReady(@NonNull MapController mapController) {
+        this.mapController = mapController;
+        // LatLng pickup = LatLng.fromDegrees( 51.50341,-0.12765);
+        // LatLng destination = LatLng.fromDegrees( 51.456032, -0.076303);
+        LatLng pickup = GetRidesActivity.fromLatLong;
+        LatLng destination = GetRidesActivity.toLatLong;
+        mapController.setPosition(pickup);
+        showPickupMarkerAt(pickup);
+        showDestinationMarkerAt(destination);
+        //Set the map center position.
+        //mapController.setPosition(Constant.CENTER_OF_LONDON);
+        //Set map zoom.
+        mapController.setZoom(MAP_ZOOM);
+        //Log.i("GUY", ""+ GetRidesActivity.route1.getDistance());
+        Route route = GetRidesActivity.route1;
+        long routePolylineId = mapController.addPolyline(new PolylineOverlay(route.getGeometry()));
+        mapController.showBoundingBox(route.getGeometry().getBoundingBox(),new Rect(20, 180, 20, 70));
+
+        //Log.i("GUY", "GUY: ");
+        if (!PermissionUtils.hasAnyLocationPermissions(this)) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSIONS_CODE);
+        }else{
+            //startLocationUpdates();
+        }
+    }
+
+
+    @Override
+    public void onMapFailure(@NonNull Exception e) {
+        Log.e("RideOffersActivity", "onMapFailure: ", e);
+    }
+
+    /**
+     * Start user location updates.
+     */
+    @SuppressLint("MissingPermission")
+    private void startLocationUpdates(){
+
+        mapController.getUserLocationMarkerManager().setLocationSource(new FusedUserLocationSource(this));
+
+    }
+
+    /**
+     * Creates a marker at the given location.
+     * @param location the marker location
+     * @param imageRes image res of marker icon.
+     * @return Marker
+     */
+    @NonNull
+    private Marker createMarker(@NonNull LatLng location, @DrawableRes int imageRes){
+
+        //Create map marker.
+        Marker marker = mapController.addMarker();
+        Resources resources = getResources();
+        Drawable drawable = ResourcesCompat.getDrawable(resources, imageRes, null);
+        if (drawable == null){
+            throw new Resources.NotFoundException();
+        }
+
+        //Set marker style.
+        int width = drawable.getIntrinsicWidth();
+        int height = drawable.getIntrinsicHeight();
+        float density = resources.getDisplayMetrics().density;
+        String size = "[" + Math.round(width/density) + "px, " + Math.round(height/density) + "px]";
+        String styleString = "{ style: 'points', color: 'white', size: " + size + ", order: 10000, collide: false, anchor: top }";
+        marker.setStylingFromString(styleString);
+
+        //Set marker icon
+        marker.setDrawable(drawable);
+
+        //Set marker location
+        marker.setPoint(location);
+
+        return marker;
+    }
+
+
+    /**
+     * Show pickup marker at point.
+     * @param point the point.
+     */
+    public void showPickupMarkerAt(@NonNull LatLng point){
+        if (pickupMarker == null){
+            // Create marker lazily.
+            pickupMarker = createMarker(point, R.drawable.ic_location_on_black_24dp);
+        }else{
+            // Otherwise just set marker location.
+            pickupMarker.setPoint(point);
+        }
+    }
+
+
+    /**
+     * Show pickup marker at point.
+     * @param point the point.
+     */
+    public void showDestinationMarkerAt(@NonNull LatLng point){
+        if (destinationMarker == null) {
+            // Create marker lazily.
+            destinationMarker = createMarker(point, R.drawable.ic_pin_drop_black_24dp);
+        }else{
+            // Otherwise just set marker location.
+            destinationMarker.setPoint(point);
         }
     }
 }

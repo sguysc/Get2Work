@@ -323,8 +323,8 @@ public class RideOffersActivity extends AppCompatActivity implements MapView.Map
 
     public void onAnyButtonClicked(@NonNull View view) {
 
-        Toast.makeText(this, "This is my Toast message!",
-                Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "This is my Toast message!",
+        //        Toast.LENGTH_LONG).show();
 
         //((ImageView)findViewById(R.id.imageView_1st)).setImageResource(R.drawable.bus);
 
@@ -357,6 +357,7 @@ public class RideOffersActivity extends AppCompatActivity implements MapView.Map
             //myRef.child("/walk/used").setValue("0");
         }
 
+        /*
         String styledText = "<b>Bus</b><br>60 min, 30 Leaves" +
                 String.format("<img src=\"%s\"/>", R.drawable.leaf);
         ((TextView)findViewById(R.id.editText_1st))
@@ -366,7 +367,7 @@ public class RideOffersActivity extends AppCompatActivity implements MapView.Map
         //((ImageView)findViewById(R.id.imageView_2nd)).setImageResource(R.drawable.leaf);
         ((TextView)findViewById(R.id.editText_2nd))
                 .setText( Html.fromHtml( styledText ) );
-
+        */
         findViewById(getResources().getIdentifier("book_button", "id", getPackageName()))
                 .callOnClick();
     }

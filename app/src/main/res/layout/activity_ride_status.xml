@@ -7,12 +7,77 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="312dp"
+        tools:layout_editor_absoluteY="322dp">
+
+    <fragment
+        android:id="@+id/map_fragment"
+        android:name="com.here.mobility.sdk.map.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView_rides_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="260px"
+            android:layout_marginBottom="0dp"
+            android:gravity="bottom"
+            android:background="@drawable/rides_header"
+            android:paddingStart="120px"
+            android:font = "@font/assistant_bold"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#A5E0E2"
+            android:text="David Beckham" />
+
+        <TextView
+            android:id="@+id/textView_rides_adress2"
+            android:layout_below="@id/textView_rides_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="184px"
+            android:layout_marginTop="-1px"
+            android:gravity="top"
+            android:paddingStart="230px"
+            android:paddingTop="10dp"
+            android:background="@drawable/rides_address"
+            android:font = "@font/assistant_regular"
+            android:textSize="16dp"
+            android:textColor="#F1F1F2"
+            android:text="London Bridge 3" />
+
+            <TextView
+                android:id="@+id/editText_remainBudget"
+                android:background="@drawable/rides_remaining_budget"
+                android:layout_width="wrap_content"
+                android:layout_height="126px"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:ems="10"
+                android:paddingStart="260dp"
+                android:gravity="center_vertical"
+                android:font = "@font/assistant_bold"
+                android:textSize="16dp"
+                android:textColor="#A5E0E2"
+                android:text="@string/ride_remain_budget" />
+
+        </RelativeLayout>
+
     <ScrollView
         android:id="@+id/ride_status_scroll_view"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp"
         android:fillViewport="false">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -205,6 +270,8 @@
                 android:layout_marginTop="@dimen/layout_vertical_standard_value" />
         </RelativeLayout>
     </ScrollView>
+
+    </FrameLayout>
     <android.support.v7.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

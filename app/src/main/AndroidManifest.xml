@@ -29,7 +29,9 @@
         <activity
             android:name=".ride_offers.RideOffersActivity"
             android:theme="@style/AppThemeNoTitle"/>
-        <activity android:name=".ride_status.RideStatusActivity" />
+        <activity
+            android:name=".ride_status.RideStatusActivity"
+            android:theme="@style/AppThemeNoTitle"/>
         <activity android:name=".rides.ActiveRidesActivity" />
         <activity android:name=".public_transport.PublicTransportActivity" />
 
