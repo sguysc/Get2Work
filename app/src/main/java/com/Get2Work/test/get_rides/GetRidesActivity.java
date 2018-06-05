@@ -148,14 +148,14 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
      * The ride pickup.
      */
     @Nullable
-    private Marker pickupMarker;
+    public Marker pickupMarker;
 
 
     /**
      * The ride destination.
      */
     @Nullable
-    private Marker destinationMarker;
+    public Marker destinationMarker;
 
 
     /**
@@ -186,8 +186,12 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    private LatLng fromLatLong;
-    private LatLng toLatLong;
+    public static LatLng fromLatLong;
+    public static LatLng toLatLong;
+    public static String custName;
+    public static String addressText;
+
+    static public Route route1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,7 +231,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
                         String ss[] = pickup1.split("\"*\":");
                         String uri = ss[1].substring(0, ss[1].length()- 13);
                         //Log.i("Guy", uri);
-                        String addressText = ss[2].substring(0, ss[2].length() - 4);
+                        addressText = ss[2].substring(0, ss[2].length() - 4);
                         //Log.i("Guy", addressText);
                         String id =  ss[3].substring(0, ss[3].length() - 10);
                         //Log.i("Guy", id);
@@ -255,7 +259,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
                         f = r.nextInt(5);
                         String custStory = dataSnapshot.child("customer" + f).getValue(String.class);
                         f = r.nextInt(9);
-                        String custName = dataSnapshot.child("name" + f).getValue(String.class);
+                        custName = dataSnapshot.child("name" + f).getValue(String.class);
 
                         //GeocodingResult to = GeocodingResult.create(id, type, title, addressText, address, uri, location);
                         pickup = from;
@@ -394,6 +398,10 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
                     requestRoute(routeRequest).
                     registerListener(routeListener);
         }
+        else {
+            RouteRequest routeRequest = RouteRequest.create(fromLatLong, toLatLong);
+            routingClient.requestRoute(routeRequest).registerListener(routeListener);
+        }
     }
 
 
@@ -421,6 +429,8 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
      */
     private void drawRoute(@NonNull Route route){
 
+        GetRidesActivity.route1 = route;
+        Log.i("GUY", route1.toString());
         if (routePolylineId != 0){
             mapController.removePolyline(routePolylineId);
         }
@@ -530,6 +540,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
 
         BookingConstraints constraints = BookingConstraints.create(1, 1);
         requestRideOffers(rideWaypoints, constraints, "", null); //1L
+        notifyRideDetailsChanged();
         // Remove me
 
         //this.onShowRidesButtonClicked(view);
@@ -554,7 +565,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
 
     private PassengerDetails setPassengerDetails(){
         PassengerDetails passengerDetails = null;
-        String name = HereMobilitySdk.getUserId();
+        String name = "amihay"; //HereMobilitySdk.getUserId();
         String phone = "+97277722288";
 
         if (!name.isEmpty() && !phone.isEmpty()){
