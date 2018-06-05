@@ -195,8 +195,7 @@ public class RideStatusActivity extends AppCompatActivity  implements MapView.Ma
 
         }
 
-        Toast.makeText(this, toastMsg,
-                Toast.LENGTH_LONG).show();
+        // Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
     }
 
 

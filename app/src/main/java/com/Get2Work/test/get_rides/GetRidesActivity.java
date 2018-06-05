@@ -195,6 +195,7 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppThemeNoTitle);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_rides);
 

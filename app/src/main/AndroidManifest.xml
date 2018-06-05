@@ -14,10 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--android:name=".nextCustomer"-->
+        <!--android:theme="@style/splashScreenTheme"-->
+        <!--android:theme="@style/AppThemeNoTitle"-->
         <activity
             android:name=".get_rides.GetRidesActivity"
-
-            android:theme="@style/AppThemeNoTitle"
+            android:theme="@style/splashScreenTheme"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
