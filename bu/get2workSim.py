@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 get to work simulator
-
 Created on Thu May 31 21:01:59 2018
-
 @author: ROEE
-
-
 """
+empbusOffer={'roee':[[],[],[]],'guy':[[],[],[]]}
+savingsRoee={'maxSavings':[],'netSavings':[],'promotions':[]}
 import pdb
 
 def getEmpOffer(Emp,netIncDict):
@@ -68,11 +66,11 @@ def getEmpOffer(Emp,netIncDict):
             #    pdb.set_trace()
             #    print(Emp.svm2trns_data['bus'])
             decPlane = Emp.estIncentiveSVM(itm[0])
-            est=max([min([decPlane,sw2srt[i][1],lastBen]),0])
+            est=max([min([decPlane+0*np.random.randn(),sw2srt[i][1],lastBen]),0])
             sw2srt[i]=(sw2srt[i][0],(sw2srt[i][1],est))
-        elif nDat==2:
-            sw2srt[i]=(sw2srt[i][0],(sw2srt[i][1],0))
         elif nDat==3:
+            sw2srt[i]=(sw2srt[i][0],(sw2srt[i][1],sw2srt[i][1]*0.1))
+        elif nDat==2:
             sw2srt[i]=(sw2srt[i][0],(sw2srt[i][1],sw2srt[i][1]))
         lastBen=sw2srt[i][1][1]
     
@@ -86,19 +84,22 @@ def getEmpOffer(Emp,netIncDict):
 
 def getEmpChoice(Emp,sw2srt):
     import operator
-
+    
     #Calculate employees choice based on simulation modle \ or external input
-    empRealExp=[(keyStr,(5+tpl[1])*Emp.prefReal[keyStr],Emp.prefReal[keyStr]) for keyStr, tpl in sw2srt]
+    empRealExp=[(keyStr,(5+tpl[1])*Emp.prefReal[keyStr]+0*np.random.randn(),Emp.prefReal[keyStr]) for keyStr, tpl in sw2srt]
     #empRealExp.append(('taxi',0,Emp.prefReal['taxi']))
+    
     empRealExp=sorted(empRealExp,key=operator.itemgetter(1,2),reverse=True)
     empRealChoiceStr=empRealExp[0][0]
     print('Emp real choice: ' + str(empRealExp))
     return empRealChoiceStr
 
 def learnChoiceVsOffer(Emp,sw2srt,empRealChoiceStr):
-    #if 'bus'==sw2srt[0][0] and Emp.name=='Roee':
+    #if 'bus'==sw2srt[0][0] and (Emp.name=='roee' or Emp.name=='guy'):
+    #    empbusOffer[Emp.name][0].append(sw2srt[0][1][1])
+    #    empbusOffer[Emp.name][1].append(empRealChoiceStr==sw2srt[0][0])
     #    pdb.set_trace()
-        
+    
     nDat=len(Emp.svm2trns_data[sw2srt[0][0]][1])
     if Emp.svmNumElems==nDat:
         # if the history buffer is full, remove old examples.
@@ -108,7 +109,7 @@ def learnChoiceVsOffer(Emp,sw2srt,empRealChoiceStr):
         
     Emp.svm2trns_data[sw2srt[0][0]][0].append([sw2srt[0][1][1]])
     
-    if Emp.cmpnyAg.geenAgenda.index(empRealChoiceStr)<=Emp.cmpnyAg.geenAgenda.index(sw2srt[0][0]):
+    if empRealChoiceStr==sw2srt[0][0]: #Emp.cmpnyAg.geenAgenda.index(empRealChoiceStr)<=Emp.cmpnyAg.geenAgenda.index(sw2srt[0][0]):
         Emp.svm2trns_data[sw2srt[0][0]][1].append(1)
     else:
         Emp.svm2trns_data[sw2srt[0][0]][1].append(0)
@@ -165,8 +166,9 @@ else:
 emptyOffer = [('walk', (0,0)), ('bus', (0,0)), ('bike', (0,0)), ('taxi', (0,0))]
 import time
 
+
 if SimMode:
-    rng=range(15)
+    rng=range(50)
 else:
     rng=plusOneGen()
 
@@ -178,14 +180,15 @@ for iii in rng:
     for e in emps:
         if not SimMode:
             #pdb.set_trace()
-            fbRes=fb.get('/Here/' + e.name + '/ride', None)
             try:
+                fbRes=fb.get('/Here/' + e.name + '/ride', None)
+            
                 usedList=sum([int(vv['used']) for vv in [v for v in list(fbRes.values())]])
             except:
                 usedList=0
             numEmptyLeafs=sum([int(vv['leafs']=='') for vv in [v for v in list(fbRes.values())]])
-            #print("guy " + str(numEmptyLeafs))
-            if 4==numEmptyLeafs: #Needs an offer (promotion)
+            #print(e.name + " {}".format(numEmptyLeafs))
+            if numEmptyLeafs == 4: #Needs an offer (promotion)
                 print('')
                 print('Employee: ' + e.name + ', promotion needed:')
                 avlblTrns=g2w.fb2Trns(fbRes)
@@ -194,20 +197,24 @@ for iii in rng:
                 sw2srt=getEmpOffer(e,ttlInc)
                 if None == sw2srt:
                     #empty offer
-                    #print("guy " + str(sw2srt))
-                    for trnsTypesStr in e.cmpnyAg.geenIndex:
-                        fb.put('/Here/' + e.name + '/ride/' + trnsTypesStr, 'leafs', '0')
-                        fb.put('/Here/' + e.name + '/ride/' + trnsTypesStr, 'used', '1')
+                    try:
+                        for trnsTypesStr in e.cmpnyAg.geenIndex:
+                            fb.put('/Here/' + e.name + '/ride/' + trnsTypesStr, 'leafs', '0')
+                            fb.put('/Here/' + e.name + '/ride/' + trnsTypesStr, 'used', '1')
+                    except:
+                        print("lost connection. Oh well...")
                 else:
                     #set leafs:
                     try:
                         guy = 0
                         for trnsType in sw2srt:
-                            if(trnsType[1][0] > 0):
+                            if(trnsType[1][1] > 0):
                                 guy = trnsType[1][0]
+                                print("hey " + e.name)
                                 fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', "%.0f" % trnsType[1][0])
                             else:
                                 fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', "%.0f" % (guy * np.random.rand(1)))
+                                print("ho " + e.name)
                             fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'used', '1')
                     except:
                         print("lost connection. Oh well...")
@@ -246,6 +253,11 @@ for iii in rng:
                 empRealChoiceStr=getEmpChoice(e,emptyOffer)
             else:
                 empRealChoiceStr=getEmpChoice(e,sw2srt)
+                tmp=dict(sw2srt)
+                #savingsRoee={'maxSavings':[],'netSavings':[],'promotiojns':[]}
+                savingsRoee['maxSavings'].append(tmp[empRealChoiceStr][0])
+                savingsRoee['netSavings'].append(tmp[empRealChoiceStr][0]-tmp[empRealChoiceStr][1])
+                savingsRoee['promotions'].append(tmp[empRealChoiceStr][1])
                 learnChoiceVsOffer(e,sw2srt,empRealChoiceStr)
     if not SimMode:        
         time.sleep(1) # pause 1 sec

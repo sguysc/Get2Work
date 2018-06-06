@@ -19,7 +19,7 @@ for i in range(L):
     plt.ylabel('leafs');
     plt.xlim(0,L+1);
     plt.ylim(Mn-1,Mx+1);
-    plt.savefig(fname=empName + 'Bus'+str(i),dpi=100);
+    #plt.savefig(fname=empName + 'Bus'+str(i),dpi=100);
     plt.show()
 #%%
 images = []
@@ -40,3 +40,12 @@ plt.plot(np.cumsum(savingsRoee['promotions']));
 plt.title('get2work promotions');plt.ylabel('money');plt.xlabel('rides');
 plt.savefig('promotionks',dpi=200)
 
+#%%
+L=len(savingsRoee['maxSavings'])
+x=range(0,L)
+fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
+ax1.fill_between(x, np.cumsum(savingsRoee['netSavings']), np.cumsum(savingsRoee['maxSavings']))
+ax1.fill_between(x, 0, np.cumsum(savingsRoee['netSavings']))
+ax1.set_ylabel('savings')
+ax2.fill_between(x, 0, np.cumsum(savingsRoee['promotions']))
+ax2.set_ylabel('promotions')
