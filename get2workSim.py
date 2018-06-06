@@ -10,6 +10,7 @@ Created on Thu May 31 21:01:59 2018
 """
 empbusOffer={'roee':[[],[],[]],'guy':[[],[],[]]}
 savingsRoee={'maxSavings':[],'netSavings':[],'promotions':[]}
+savingsGuy={'maxSavings':[],'netSavings':[],'promotions':[]}
 import pdb
 
 def getEmpOffer(Emp,netIncDict):
@@ -218,7 +219,7 @@ import time
 
 
 if SimMode:
-    rng=range(50)
+    rng=range(200)
 else:
     rng=plusOneGen()
 
@@ -295,10 +296,14 @@ for iii in rng:
             else:
                 empRealChoiceStr=getEmpChoice(e,sw2srt)
                 tmp=dict(sw2srt)
-                #savingsRoee={'maxSavings':[],'netSavings':[],'promotiojns':[]}
-                savingsRoee['maxSavings'].append(tmp[empRealChoiceStr][0])
-                savingsRoee['netSavings'].append(tmp[empRealChoiceStr][0]-tmp[empRealChoiceStr][1])
-                savingsRoee['promotions'].append(tmp[empRealChoiceStr][1])
+                if e.name=='roee':
+                    savingsRoee['maxSavings'].append(tmp[empRealChoiceStr][0])
+                    savingsRoee['netSavings'].append(tmp[empRealChoiceStr][0]-tmp[empRealChoiceStr][1])
+                    savingsRoee['promotions'].append(tmp[empRealChoiceStr][1])
+                elif e.name=='guy':
+                    savingsGuy['maxSavings'].append(tmp[empRealChoiceStr][0])
+                    savingsGuy['netSavings'].append(tmp[empRealChoiceStr][0]-tmp[empRealChoiceStr][1])
+                    savingsGuy['promotions'].append(tmp[empRealChoiceStr][1])
                 learnChoiceVsOffer(e,sw2srt,empRealChoiceStr)
     if not SimMode:        
         time.sleep(1) # pause 1 sec
