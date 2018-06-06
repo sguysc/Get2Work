@@ -183,7 +183,7 @@ import get2work as g2w
 import numpy as np
 
 #Choose simulation True or False:
-SimMode=True
+SimMode=False
 
 #%% Make \ Obtain employees:
 if SimMode:
@@ -277,7 +277,7 @@ for iii in rng:
                 sw2srt=getEmpOffer(e,ttlInc)
                 #learn from choice:
                 learnChoiceVsOffer(e,sw2srt,empRealChoiceStr)
-                fbPutWrap(fb,'/Here/' + e.name + '/ride/' + empRealChoiceStr, 'used', '1')
+                fbPutWrap(fb,'/Here/' + e.name + '/ride/' + empRealChoiceStr, 'used', '0')
                 continue
             
         else:
