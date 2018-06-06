@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 """
 get to work simulator
+
 Created on Thu May 31 21:01:59 2018
+
 @author: ROEE
+
+
 """
 empbusOffer={'roee':[[],[],[]],'guy':[[],[],[]]}
 savingsRoee={'maxSavings':[],'netSavings':[],'promotions':[]}
+savingsGuy={'maxSavings':[],'netSavings':[],'promotions':[]}
 import pdb
 
 def getEmpOffer(Emp,netIncDict):
@@ -66,7 +71,7 @@ def getEmpOffer(Emp,netIncDict):
             #    pdb.set_trace()
             #    print(Emp.svm2trns_data['bus'])
             decPlane = Emp.estIncentiveSVM(itm[0])
-            est=max([min([decPlane+0*np.random.randn(),sw2srt[i][1],lastBen]),0])
+            est=max([min([decPlane+1*np.random.randn(),sw2srt[i][1],lastBen]),0])
             sw2srt[i]=(sw2srt[i][0],(sw2srt[i][1],est))
         elif nDat==3:
             sw2srt[i]=(sw2srt[i][0],(sw2srt[i][1],sw2srt[i][1]*0.1))
@@ -95,10 +100,11 @@ def getEmpChoice(Emp,sw2srt):
     return empRealChoiceStr
 
 def learnChoiceVsOffer(Emp,sw2srt,empRealChoiceStr):
-    #if 'bus'==sw2srt[0][0] and (Emp.name=='roee' or Emp.name=='guy'):
-    #    empbusOffer[Emp.name][0].append(sw2srt[0][1][1])
-    #    empbusOffer[Emp.name][1].append(empRealChoiceStr==sw2srt[0][0])
-    #    pdb.set_trace()
+    if SimMode:
+        if 'bus'==sw2srt[0][0] and (Emp.name=='roee' or Emp.name=='guy'):
+            empbusOffer[Emp.name][0].append(sw2srt[0][1][1])
+            empbusOffer[Emp.name][1].append(empRealChoiceStr==sw2srt[0][0])
+            #pdb.set_trace()
     
     nDat=len(Emp.svm2trns_data[sw2srt[0][0]][1])
     if Emp.svmNumElems==nDat:
@@ -119,6 +125,51 @@ def learnChoiceVsOffer(Emp,sw2srt,empRealChoiceStr):
     print('Learn ' + Emp.name + ': \n' + str(Emp.svm2trns_data))
     #pdb.set_trace()
     return
+
+def fbGetWrap(fb,pth,notUsed):
+    '''
+    This function is a wrapper for firebase get.
+    Its should be used to reduce crashes due to connection failures.
+    '''
+    numFails=0
+    Success=False
+    import time
+    while not Success:
+        try:
+            res = fb.get(pth,notUsed)
+            Success=True
+        except:
+            numFails+=1
+            time.sleep(2)
+        if numFails>5:
+            print('fb.get: Oh well, connection failure :-(')
+            return []
+    return res
+
+def fbPutWrap(fb,pth,pthEnd,val):
+    '''
+    This function is a wrapper for firebase get.
+    Its should be used to reduce crashes due to connection failures.
+    '''
+    if type(val)!=str:
+        val=str(val)
+    
+    numFails=0
+    Success=False
+    import time
+    while not Success:
+        try:
+            res = fb.put(pth, pthEnd, val)
+            Success=True
+        except:
+            numFails+=1
+            time.sleep(2)
+        if numFails>5:
+            print('fb.put: Oh well, connection failure :-(')
+            return None
+
+    return res
+
     
 def plusOneGen():
     i=0
@@ -132,7 +183,7 @@ import get2work as g2w
 import numpy as np
 
 #Choose simulation True or False:
-SimMode=False
+SimMode=True
 
 #%% Make \ Obtain employees:
 if SimMode:
@@ -150,7 +201,7 @@ else:
     # initiate firebase connection:
     emps=[]
     fb=g2w.initDataBase()
-    aaa=fb.get('/Here',None)
+    aaa=fbGetWrap(fb,'/Here',None)
     for ind, empName in zip(range(len(aaa)),aaa.keys()):
         salary = np.random.randint(25,45)
         hoursPerClient=np.random.rand()
@@ -168,7 +219,7 @@ import time
 
 
 if SimMode:
-    rng=range(50)
+    rng=range(200)
 else:
     rng=plusOneGen()
 
@@ -180,9 +231,8 @@ for iii in rng:
     for e in emps:
         if not SimMode:
             #pdb.set_trace()
+            fbRes=fbGetWrap(fb,'/Here/' + e.name + '/ride', None)
             try:
-                fbRes=fb.get('/Here/' + e.name + '/ride', None)
-            
                 usedList=sum([int(vv['used']) for vv in [v for v in list(fbRes.values())]])
             except:
                 usedList=0
@@ -191,33 +241,25 @@ for iii in rng:
             if numEmptyLeafs == 4: #Needs an offer (promotion)
                 print('')
                 print('Employee: ' + e.name + ', promotion needed:')
-                avlblTrns=g2w.fb2Trns(fbRes )
+                avlblTrns=g2w.fb2Trns(fbRes)
                 ttlInc=g2w.calcTtlInc(e,avlblTrns)
                 # calculate offer \ promotion based on ttlInc:
                 sw2srt=getEmpOffer(e,ttlInc)
                 if None == sw2srt:
                     #empty offer
-                    try:
-                        for trnsTypesStr in e.cmpnyAg.geenIndex:
-                            fb.put('/Here/' + e.name + '/ride/' + trnsTypesStr, 'leafs', '0')
-                            fb.put('/Here/' + e.name + '/ride/' + trnsTypesStr, 'used', '1')
-                    except:
-                        print("lost connection. Oh well...")
+                    for trnsTypesStr in e.cmpnyAg.geenIndex:
+                        fbPutWrap(fb, '/Here/' + e.name + '/ride/' + trnsTypesStr, 'leafs', '0')
+                        fbPutWrap(fb, '/Here/' + e.name + '/ride/' + trnsTypesStr, 'used', '1')
                 else:
                     #set leafs:
-                    try:
-                        guy = 0
-                        for trnsType in sw2srt:
-                            if(trnsType[1][1] > 0):
-                                guy = trnsType[1][0]
-                                print("hey " + e.name)
-                                fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', "%.0f" % trnsType[1][0])
-                            else:
-                                fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', "%.0f" % (guy * np.random.rand(1)))
-                                print("ho " + e.name)
-                            fb.put('/Here/' + e.name + '/ride/' + trnsType[0], 'used', '1')
-                    except:
-                        print("lost connection. Oh well...")
+                    guy = 0
+                    for trnsType in sw2srt:
+                        if(trnsType[1][1] > 0):
+                            guy = trnsType[1][1] # was trnsType[1][0], fixed by roee on 6,6,18 @ 22:00
+                            fbPutWrap(fb, '/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', "%.0f" % trnsType[1][0])
+                        else:
+                            fbPutWrap(fb, '/Here/' + e.name + '/ride/' + trnsType[0], 'leafs', "%.0f" % (guy * np.random.rand(1)))
+                        fbPutWrap(fb,'/Here/' + e.name + '/ride/' + trnsType[0], 'used', '1')
                         
             elif 4==usedList:
                 # wait for input from user
@@ -235,7 +277,7 @@ for iii in rng:
                 sw2srt=getEmpOffer(e,ttlInc)
                 #learn from choice:
                 learnChoiceVsOffer(e,sw2srt,empRealChoiceStr)
-                fb.put('/Here/' + e.name + '/ride/' + empRealChoiceStr, 'used', '1')
+                fbPutWrap(fb,'/Here/' + e.name + '/ride/' + empRealChoiceStr, 'used', '1')
                 continue
             
         else:
@@ -254,10 +296,14 @@ for iii in rng:
             else:
                 empRealChoiceStr=getEmpChoice(e,sw2srt)
                 tmp=dict(sw2srt)
-                #savingsRoee={'maxSavings':[],'netSavings':[],'promotiojns':[]}
-                savingsRoee['maxSavings'].append(tmp[empRealChoiceStr][0])
-                savingsRoee['netSavings'].append(tmp[empRealChoiceStr][0]-tmp[empRealChoiceStr][1])
-                savingsRoee['promotions'].append(tmp[empRealChoiceStr][1])
+                if e.name=='roee':
+                    savingsRoee['maxSavings'].append(tmp[empRealChoiceStr][0])
+                    savingsRoee['netSavings'].append(tmp[empRealChoiceStr][0]-tmp[empRealChoiceStr][1])
+                    savingsRoee['promotions'].append(tmp[empRealChoiceStr][1])
+                elif e.name=='guy':
+                    savingsGuy['maxSavings'].append(tmp[empRealChoiceStr][0])
+                    savingsGuy['netSavings'].append(tmp[empRealChoiceStr][0]-tmp[empRealChoiceStr][1])
+                    savingsGuy['promotions'].append(tmp[empRealChoiceStr][1])
                 learnChoiceVsOffer(e,sw2srt,empRealChoiceStr)
     if not SimMode:        
         time.sleep(1) # pause 1 sec
