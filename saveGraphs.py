@@ -34,3 +34,9 @@ plt.plot(np.cumsum(savingsRoee['maxSavings']));
 plt.plot(np.cumsum(savingsRoee['netSavings']));
 plt.title('max savings , get2work savings');plt.ylabel('money');plt.xlabel('rides');
 plt.savefig('Max possible savings',dpi=200)
+
+#%%
+plt.plot(np.cumsum(savingsRoee['promotions']));
+plt.title('get2work promotions');plt.ylabel('money');plt.xlabel('rides');
+plt.savefig('promotionks',dpi=200)
+
