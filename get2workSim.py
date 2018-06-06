@@ -278,6 +278,11 @@ for iii in rng:
                 #learn from choice:
                 learnChoiceVsOffer(e,sw2srt,empRealChoiceStr)
                 fbPutWrap(fb,'/Here/' + e.name + '/ride/' + empRealChoiceStr, 'used', '0')
+                #Update history in DB:
+                fbPutWrap(fb, '/Here/' + e.name + '/history', 'last_choice', empRealChoiceStr)
+                leafsForChoice=int(fbGetWrap(fb,'/Here/' + e.name + '/ride/' + empRealChoiceStr + '/leafs', None))
+                lastLeafsCount=int(fbGetWrap(fb,'/Here/' + e.name + '/history/saved', None))
+                updateLeafCount=fbPutWrap(fb,'/Here/' + e.name + '/history','saved',str(leafsForChoice+lastLeafsCount))
                 continue
             
         else:
