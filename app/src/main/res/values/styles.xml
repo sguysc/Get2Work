@@ -138,7 +138,7 @@
     </style>
 
     <style name="splashScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/taxi</item>
+        <item name="android:windowBackground">@drawable/splash</item>
         <item name="colorPrimary">@color/colorPrimary</item>rererrr
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
