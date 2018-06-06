@@ -566,7 +566,8 @@ public class GetRidesActivity extends AppCompatActivity implements MapView.MapRe
 
     private PassengerDetails setPassengerDetails(){
         PassengerDetails passengerDetails = null;
-        String name = "amihay"; //HereMobilitySdk.getUserId();
+        //String name = "amihay"; //HereMobilitySdk.getUserId();
+        String name = HereMobilitySdk.getUserId();
         String phone = "+97277722288";
 
         if (!name.isEmpty() && !phone.isEmpty()){
